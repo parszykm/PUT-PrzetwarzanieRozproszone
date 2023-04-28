@@ -9,6 +9,7 @@
 #include <pthread.h>
 
 #include "util.h"
+#include "queue.h"
 /* boolean */
 #define TRUE 1
 #define FALSE 0

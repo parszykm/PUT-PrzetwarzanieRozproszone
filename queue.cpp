@@ -1,25 +1,31 @@
 #include "queue.h"
 
-
-std::priority_queue<packet_t, std::vector<packet_t>, PrioComparator> queuePacket; 
-
-bool PrioComparator::operator()(const packet_t& s1, const packet_t& s2){
-        if (s1.ts != s2.ts) {
-            return s1.ts > s2.ts;
-        }
-        return s1.src > s2.src;
+void PacketVector::push(packet_t& packet) {
+    // Szukanie miejsca do wstawienia pakietu
+    auto it = m_packets.begin();
+    while (it != m_packets.end() && (it->ts < packet.ts || (it->ts == packet.ts && it->src < packet.src))) {
+        ++it;
     }
-
-void showQueue(){
-    // std::string result;
-    std::cout << "Zawartosc kolejki: ";
-    std::priority_queue<packet_t, std::vector<packet_t>, PrioComparator> tmpQueue = queuePacket;
-    while (!tmpQueue.empty()) {
-        std::cout <<std::endl<< "(" << tmpQueue.top().ts << ", " << tmpQueue.top().src << ", " << tmpQueue.top().data << ") ";
-        // result += "(" + std::to_string(tmpQueue.top().ts) + ", " + std::to_string(tmpQueue.top().src) + ", " + std::to_string(tmpQueue.top().data) + ")\n";
-        tmpQueue.pop();
-        
-    }
-    std::cout << std::endl;
-    // return result;
+    // Wstawienie pakietu w odpowiednim miejscu
+    m_packets.insert(it, packet);
 }
+
+void PacketVector::pop() {
+    // Usuwanie pierwszego pakietu
+    if (!m_packets.empty()) {
+        m_packets.erase(m_packets.begin());
+    }
+}
+
+void PacketVector::showQueue(){
+    std::cout << "Packet vector:" << std::endl;
+    for (const auto& packet : m_packets) {
+        std::cout << "ts: " << packet.ts << ", src: " << packet.src << ", data: " << packet.data << std::endl;
+    }
+}
+
+packet_t PacketVector::top(){
+    return m_packets[0];
+}
+
+PacketVector queuePacket;

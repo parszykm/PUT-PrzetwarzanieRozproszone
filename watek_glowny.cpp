@@ -1,6 +1,6 @@
 #include "main.h"
 #include "watek_glowny.h"
-#include "queue.h"
+// #include "queue.h"
 
 void mainLoop()
 {
@@ -21,8 +21,10 @@ void mainLoop()
 					pkt->data = perc;
 					ackCount = 0;
 					pthread_mutex_lock( &queueMut );
-						queuePacket.push({clockVar, rank, perc});
+						packet_t tmpPacket = {clockVar, rank, perc};
+						queuePacket.push(tmpPacket);
 						// printf("Ubiegam się %d - %d",queuePacket.top().src, queuePacket.empty());
+						// printf("PAKIET %d, %d, %d\n", clockVar, rank, perc);
         			pthread_mutex_unlock( &queueMut );
 					// queuePacket.push(*pkt);
 					//TODO: Dodawanie do kolejki siebie
@@ -49,9 +51,11 @@ void mainLoop()
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
 			// println("warunek: %b", ackCount == size - 1 && queuePacket.top().src == rank);
-			printf("%d", rank);
-			if ( ackCount == size - 1 && queuePacket.top().src == rank) 
+			// printf("%d", rank);
+			if ( ackCount == size - 1 && queuePacket.top().src == rank
+			) {
 				changeState(InSection);
+			}
 			break;
 	    case InSection:
 		{

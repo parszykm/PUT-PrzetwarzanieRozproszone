@@ -1,18 +1,20 @@
-#include <iostream>
-#include <queue>
-#include <string>
-#include<vector>
-// #include "main.h"
-// #pragma once
-struct test_struct{
-    int ts;       /* timestamp (zegar lamporta */
-    int src;  
-    int data; 
-};
-class PrioComparator {
-public:
-    bool operator()(test_struct const& a, test_struct const& b);
-};
-extern std::priority_queue<test_struct, std::vector<test_struct>, PrioComparator> queuePacket;
+#include <vector>
 
-void showQueue();
+typedef struct {
+    int ts;
+    int src;
+    int data;
+} packet_t;
+
+class PacketVector {
+public:
+    void  push(const packet_t& packet);
+    void pop();
+    void showQueue();
+    int top();
+
+
+private:
+    std::vector<packet_t> m_packets;
+};
+

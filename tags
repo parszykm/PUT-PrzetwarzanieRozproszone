@@ -19,7 +19,8 @@ InWant	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InFinish} sta
 MAINH	main.h	/^#define MAINH$/;"	d
 MPI_PAKIET_T	util.cpp	/^MPI_Datatype MPI_PAKIET_T;$/;"	v	typeref:typename:MPI_Datatype
 NITEMS	util.h	/^#define NITEMS /;"	d
-PrioComparator	queue.h	/^class PrioComparator {$/;"	c
+PacketVector	queue.h	/^class PacketVector {$/;"	c
+PrioComparator	queue/queue.h	/^class PrioComparator {$/;"	c
 RELEASE	util.h	/^#define RELEASE /;"	d
 REQUEST	util.h	/^#define REQUEST /;"	d
 ROOT	main.h	/^#define ROOT /;"	d
@@ -40,24 +41,33 @@ clean	Makefile	/^clean:$/;"	t
 clear	Makefile	/^clear: clean$/;"	t
 clockMut	util.cpp	/^pthread_mutex_t clockMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
 clockVar	util.cpp	/^int clockVar = 0;$/;"	v	typeref:typename:int
+data	queue/queue.h	/^    int data; $/;"	m	struct:test_struct	typeref:typename:int
 data	util.h	/^    int data;     \/* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą /;"	m	struct:__anon213916590108	typeref:typename:int
 debug	main.h	/^#define debug(/;"	d
 finalizuj	main.cpp	/^void finalizuj()$/;"	f	typeref:typename:void
 inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f	typeref:typename:void
+m_packets	queue.h	/^    std::vector<packet_t> m_packets;$/;"	m	class:PacketVector	typeref:typename:std::vector<packet_t>
 main	Makefile	/^main: $(SOURCES) $(HEADERS) Makefile$/;"	t
 main	main.cpp	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+main	queue/queue_test.cpp	/^int main(){$/;"	f	typeref:typename:int
 mainLoop	watek_glowny.cpp	/^void mainLoop()$/;"	f	typeref:typename:void
 name	util.cpp	/^    const char *name;$/;"	m	struct:tagNames_t	typeref:typename:const char *	file:
-operator ()	queue.cpp	/^bool PrioComparator::operator()(const packet_t& s1, const packet_t& s2){$/;"	f	class:PrioComparator	typeref:typename:bool
+operator ()	queue/queue.cpp	/^bool PrioComparator::operator()(const test_struct& s1, const test_struct& s2){$/;"	f	class:PrioComparator	typeref:typename:bool
 packet_t	util.h	/^} packet_t;$/;"	t	typeref:struct:__anon213916590108
+pop	queue.cpp	/^void PacketVector::pop() {$/;"	f	class:PacketVector	typeref:typename:void
 println	main.h	/^#define println(/;"	d
+push	queue.cpp	/^void PacketVector::push(packet_t& packet) {$/;"	f	class:PacketVector	typeref:typename:void
 queueMut	util.cpp	/^pthread_mutex_t queueMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
-queuePacket	queue.cpp	/^std::priority_queue<packet_t, std::vector<packet_t>, PrioComparator> queuePacket; $/;"	v	typeref:typename:std::priority_queue<packet_t,std::vector<packet_t>,PrioComparator>
+queuePacket	queue.cpp	/^PacketVector queuePacket;/;"	v	typeref:typename:PacketVector
+queuePacket	queue/queue.cpp	/^std::priority_queue<test_struct, std::vector<test_struct>, PrioComparator> queuePacket; $/;"	v	typeref:typename:std::priority_queue<test_struct,std::vector<test_struct>,PrioComparator>
 rank	main.cpp	/^int rank, size;$/;"	v	typeref:typename:int
 run	Makefile	/^run: main Makefile tags$/;"	t
+run-debug	Makefile	/^run-debug: main Makefile tags$/;"	t
 sendPacket	util.cpp	/^void sendPacket(packet_t *pkt, int destination, int tag)$/;"	f	typeref:typename:void
-showQueue	queue.cpp	/^void showQueue(){$/;"	f	typeref:typename:void
+showQueue	queue.cpp	/^void PacketVector::showQueue(){$/;"	f	class:PacketVector	typeref:typename:void
+showQueue	queue/queue.cpp	/^void showQueue(){$/;"	f	typeref:typename:void
 size	main.cpp	/^int rank, size;$/;"	v	typeref:typename:int
+src	queue/queue.h	/^    int src;  $/;"	m	struct:test_struct	typeref:typename:int
 src	util.h	/^    int src;  $/;"	m	struct:__anon213916590108	typeref:typename:int
 stan	util.cpp	/^state_t stan=InRun;$/;"	v	typeref:typename:state_t
 startKomWatek	watek_komunikacyjny.cpp	/^void *startKomWatek(void *ptr)$/;"	f	typeref:typename:void *
@@ -68,5 +78,8 @@ tag2string	util.cpp	/^const char *tag2string( int tag )$/;"	f	typeref:typename:c
 tagNames	util.cpp	/^} tagNames[] = { { "pakiet aplikacyjny", APP_PKT }, { "finish", FINISH}, $/;"	v	typeref:struct:tagNames_t[]
 tagNames_t	util.cpp	/^struct tagNames_t{$/;"	s	file:
 tags	Makefile	/^tags: ${SOURCES} ${HEADERS}$/;"	t
+test_struct	queue/queue.h	/^struct test_struct{$/;"	s
 threadKom	main.cpp	/^pthread_t threadKom;$/;"	v	typeref:typename:pthread_t
+top	queue.cpp	/^packet_t PacketVector::top(){$/;"	f	class:PacketVector	typeref:typename:packet_t
+ts	queue/queue.h	/^    int ts;       \/* timestamp (zegar lamporta *\/$/;"	m	struct:test_struct	typeref:typename:int
 ts	util.h	/^    int ts;       \/* timestamp (zegar lamporta *\/$/;"	m	struct:__anon213916590108	typeref:typename:int

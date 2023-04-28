@@ -1,25 +1,29 @@
 #include "queue.h"
-
-
-std::priority_queue<test_struct, std::vector<test_struct>, PrioComparator> queuePacket; 
-
-bool PrioComparator::operator()(const test_struct& s1, const test_struct& s2){
-        if (s1.ts != s2.ts) {
-            return s1.ts > s2.ts;
-        }
-        return s1.src > s2.src;
+#include<iostream>
+void PacketVector::push(const packet_t& packet) {
+    // Szukanie miejsca do wstawienia pakietu
+    auto it = m_packets.begin();
+    while (it != m_packets.end() && (it->ts < packet.ts || (it->ts == packet.ts && it->src < packet.src))) {
+        ++it;
     }
+    // Wstawienie pakietu w odpowiednim miejscu
+    m_packets.insert(it, packet);
+}
 
-void showQueue(){
-    // std::string result;
-    std::cout << "Zawartosc kolejki: ";
-    std::priority_queue<test_struct, std::vector<test_struct>, PrioComparator> tmpQueue = queuePacket;
-    while (!tmpQueue.empty()) {
-        std::cout <<std::endl<< "(" << tmpQueue.top().ts << ", " << tmpQueue.top().src << ", " << tmpQueue.top().data << ") ";
-        // result += "(" + std::to_string(tmpQueue.top().ts) + ", " + std::to_string(tmpQueue.top().src) + ", " + std::to_string(tmpQueue.top().data) + ")\n";
-        tmpQueue.pop();
-        
+void PacketVector::pop() {
+    // Usuwanie pierwszego pakietu
+    if (!m_packets.empty()) {
+        m_packets.erase(m_packets.begin());
     }
-    std::cout << std::endl;
-    // return result;
+}
+
+void PacketVector::showQueue(){
+    std::cout << "Packet vector:" << std::endl;
+    for (const auto& packet : m_packets) {
+        std::cout << "ts: " << packet.ts << ", src: " << packet.src << ", data: " << packet.data << std::endl;
+    }
+}
+
+int PacketVector::top(){
+    return m_packets[0].src;
 }

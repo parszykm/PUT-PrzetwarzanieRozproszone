@@ -1,6 +1,6 @@
 #include "main.h"
 #include "watek_komunikacyjny.h"
-#include "queue.h"
+// #include "queue.h"
 
 /* wątek komunikacyjny; zajmuje się odbiorem i reakcją na komunikaty */
 

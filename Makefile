@@ -6,7 +6,7 @@ FLAGS=-g
 all: main tags
 
 main: $(SOURCES) $(HEADERS) Makefile
-	mpic++ $(SOURCES) $(FLAGS) -o main -g
+	mpic++ $(SOURCES) $(FLAGS) -o main
 
 clear: clean
 

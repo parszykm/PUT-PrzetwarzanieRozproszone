@@ -1,24 +1,26 @@
 #include<iostream>
 #include "queue.h"
 using namespace std;
+
+PacketVector queuePacket;
 int main(){
-    test_struct *xd = new test_struct{1,2,3};
+    packet_t *xd = new packet_t{1,2,3};
    queuePacket.push({1, 0, 123});
    queuePacket.push({4, 3, 213});
    queuePacket.push({4, 1, 213});
    queuePacket.push({2, 2, 12});
 
-    std::cout << "Priority queue size is " <<queuePacket.size() << std::endl;
-
     
-    showQueue();
+    queuePacket.showQueue();
 
     queuePacket.pop();
-    showQueue();
+    queuePacket.showQueue();
     queuePacket.push({2, 2, 12});
-    showQueue();
+    queuePacket.showQueue();
     queuePacket.push(*xd);
-    showQueue();
+    queuePacket.showQueue();
+
+    printf("%d", queuePacket.top());
 
     
 }
