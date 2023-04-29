@@ -1,6 +1,6 @@
 #include "queue.h"
 
-void PacketVector::push(packet_t& packet) {
+void ProcessQueue::push(packet_t& packet) {
     // Szukanie miejsca do wstawienia pakietu
     auto it = m_packets.begin();
     while (it != m_packets.end() && (it->ts < packet.ts || (it->ts == packet.ts && it->src < packet.src))) {
@@ -10,22 +10,40 @@ void PacketVector::push(packet_t& packet) {
     m_packets.insert(it, packet);
 }
 
-void PacketVector::pop() {
+void ProcessQueue::pop() {
     // Usuwanie pierwszego pakietu
     if (!m_packets.empty()) {
         m_packets.erase(m_packets.begin());
     }
 }
 
-void PacketVector::showQueue(){
+void ProcessQueue::showQueue(){
     std::cout << "Packet vector:" << std::endl;
     for (const auto& packet : m_packets) {
         std::cout << "ts: " << packet.ts << ", src: " << packet.src << ", data: " << packet.data << std::endl;
+        // queueState += "ts: " + std::to_string(packet.ts) + ", src: " + std::to_string(packet.src) + ", data: " + std::to_string(packet.data) + ", type" + packet.processType + "\n";
+
     }
 }
+std::vector<packet_t> ProcessQueue::getQueue(){
+    return m_packets;
+}
 
-packet_t PacketVector::top(){
+bool ProcessQueue::isCandidate(int rank, int n){
+    auto it = m_packets.begin();
+    int index = 0;
+    while(it != m_packets.end() && index < n){  
+        // printf("rank: %d, index: %d, element: %d, bool %d\n", rank, index, it->src, it->src == rank);
+        // showQueue();
+        if(it->src == rank) return true;
+        index++;
+        ++it;
+    }
+    return false;
+}
+
+packet_t ProcessQueue::top(){
     return m_packets[0];
 }
 
-PacketVector queuePacket;
+ProcessQueue sectionQueue;

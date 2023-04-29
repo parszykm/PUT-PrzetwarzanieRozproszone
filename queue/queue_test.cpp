@@ -2,25 +2,25 @@
 #include "queue.h"
 using namespace std;
 
-PacketVector queuePacket;
+ProcessQueue sectionQueue;
 int main(){
     packet_t *xd = new packet_t{1,2,3};
-   queuePacket.push({1, 0, 123});
-   queuePacket.push({4, 3, 213});
-   queuePacket.push({4, 1, 213});
-   queuePacket.push({2, 2, 12});
+   sectionQueue.push({1, 0, 123});
+   sectionQueue.push({4, 3, 213});
+   sectionQueue.push({4, 1, 213});
+   sectionQueue.push({2, 2, 12});
 
     
-    queuePacket.showQueue();
+    sectionQueue.showQueue();
 
-    queuePacket.pop();
-    queuePacket.showQueue();
-    queuePacket.push({2, 2, 12});
-    queuePacket.showQueue();
-    queuePacket.push(*xd);
-    queuePacket.showQueue();
+    sectionQueue.pop();
+    sectionQueue.showQueue();
+    sectionQueue.push({2, 2, 12});
+    sectionQueue.showQueue();
+    sectionQueue.push(*xd);
+    sectionQueue.showQueue();
 
-    printf("%d", queuePacket.top());
+    printf("%d", sectionQueue.top());
 
     
 }

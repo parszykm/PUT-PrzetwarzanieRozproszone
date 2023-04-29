@@ -1,7 +1,7 @@
 #include "main.h"
 #include "watek_glowny.h"
 // #include "queue.h"
-
+std::vector<int> sekcja;
 void mainLoop()
 {
     srandom(rank);
@@ -21,12 +21,12 @@ void mainLoop()
 					pkt->data = perc;
 					ackCount = 0;
 					pthread_mutex_lock( &queueMut );
-						packet_t tmpPacket = {clockVar, rank, perc};
-						queuePacket.push(tmpPacket);
-						// printf("Ubiegam się %d - %d",queuePacket.top().src, queuePacket.empty());
+						packet_t tmpPacket = {clockVar, rank, perc, processType};
+						sectionQueue.push(tmpPacket);
+						// printf("Ubiegam się %d - %d",sectionQueue.top().src, sectionQueue.empty());
 						// printf("PAKIET %d, %d, %d\n", clockVar, rank, perc);
         			pthread_mutex_unlock( &queueMut );
-					// queuePacket.push(*pkt);
+					// sectionQueue.push(*pkt);
 					//TODO: Dodawanie do kolejki siebie
 					for (int i=0;i<=size-1;i++)
 					if (i!=rank)
@@ -42,35 +42,48 @@ void mainLoop()
 				debug("Skończyłem myśleć");
 			break;
 	    case InWant:
-			// printf("%d - %d",queuePacket.top().src, queuePacket.empty());
+			// printf("%d - %d",sectionQueue.top().src, sectionQueue.empty());
 			println("Czekam na wejście do sekcji krytycznej");
+			pthread_mutex_lock( &queueMut );
+				printf("rank: %d, size: %d\n", rank, sectionQueue.getQueue().size());
+			pthread_mutex_unlock( &queueMut );
 			// pthread_mutex_lock( &queueMut );
 			// 	showQueue();
 			// pthread_mutex_unlock( &queueMut );
 			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
-			// println("warunek: %b", ackCount == size - 1 && queuePacket.top().src == rank);
+			// println("warunek: %b", ackCount == size - 1 && sectionQueue.top().src == rank);
 			// printf("%d", rank);
-			if ( ackCount == size - 1 && queuePacket.top().src == rank
+			if ( ackCount == size - 1 && 
+			// sectionQueue.isCandidate(rank, hotelCapacity)
+			sectionQueue.top().src == rank 
 			) {
 				changeState(InSection);
+				sekcja.push_back(rank);
 			}
 			break;
 	    case InSection:
 		{
 		// tutaj zapewne jakiś muteks albo zmienna warunkowa
-		println("Jestem w sekcji krytycznej")
-		
+
+		std::string sectionState = printVector(sekcja); 
+		println("Jestem w sekcji krytycznej");
+		std::cout<< sectionState<<std::endl;
+
 		    sleep(5);
 		//if ( perc < 25 ) {
 		    debug("Perc: %d", perc);
+
 		    println("Wychodzę z sekcji krytycznej")
 			
 		    debug("Zmieniam stan na wysyłanie");
 		    packet_t *pkt = new packet_t;
 		    pkt->data = perc;
-
+			pthread_mutex_lock( &queueMut );
+					sectionQueue.pop();
+					removeElement(sekcja, rank);
+			pthread_mutex_unlock( &queueMut );
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
 			    sendPacket( pkt, (rank+1)%size, RELEASE);

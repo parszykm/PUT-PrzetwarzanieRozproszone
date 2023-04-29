@@ -13,6 +13,10 @@
  */
 int rank, size;
 int ackCount = 0;
+int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);
+int cleanerCount = size - blueCount - purpleCount;
+std::string processType;
+int hotelCapacity = 2;
 /* 
  * Każdy proces ma dwa wątki - główny i komunikacyjny
  * w plikach, odpowiednio, watek_glowny.c oraz (siurpryza) watek_komunikacyjny.c
@@ -68,6 +72,7 @@ int main(int argc, char **argv)
     inicjuj_typ_pakietu(); // tworzy typ pakietu
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    processType = generateTypeForProcess(rank, size);
     /* startKomWatek w watek_komunikacyjny.c 
      * w vi najedź kursorem na nazwę pliku i wciśnij klawisze gf
      * powrót po wciśnięciu ctrl+6

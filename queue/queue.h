@@ -6,7 +6,7 @@ typedef struct {
     int data;
 } packet_t;
 
-class PacketVector {
+class ProcessQueue {
 public:
     void  push(const packet_t& packet);
     void pop();

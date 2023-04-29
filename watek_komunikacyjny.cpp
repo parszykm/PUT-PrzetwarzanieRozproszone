@@ -21,9 +21,9 @@ void *startKomWatek(void *ptr)
 	    case REQUEST: 
                 // println("Ktoś coś prosi. A niech ma!")
                 //TODO: Dodawanie do kolejki procesu z requestem
-                // printf("request przyszedl od %d - clock: %d", pakiet.src, pakiet.ts);
+                println("Request przyszedl od %d", pakiet.src);
                 pthread_mutex_lock( &queueMut );
-                    queuePacket.push(pakiet);
+                    sectionQueue.push(pakiet);
                 pthread_mutex_unlock( &queueMut );
                 debug("Ktoś coś prosi. A niech ma!")
 
@@ -31,12 +31,12 @@ void *startKomWatek(void *ptr)
 	    break;
 	    case ACK: 
                 debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount, clockVar);
+                println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
 	        ackCount++; /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
         case RELEASE:
-            // debug("Dostałem REALEASE od %d, usuwam %d z kolejki", status.MPI_SOURCE, queuePacket.top().src);
+            // debug("Dostałem REALEASE od %d, usuwam %d z kolejki", status.MPI_SOURCE, sectionQueue.top().src);
             pthread_mutex_lock( &queueMut );
-                queuePacket.pop();
+                sectionQueue.pop();
             pthread_mutex_unlock( &queueMut );
             break;
         //TODO: dodac case dla RELEASE

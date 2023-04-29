@@ -77,3 +77,29 @@ void changeState( state_t newState )
     stan = newState;
     pthread_mutex_unlock( &stateMut );
 }
+
+std::string generateTypeForProcess(int rank, int size){
+    if(rank < floor(size*BLUE_PERCENTAGE))
+        return BLUE;
+    else if(rank < floor(size*(BLUE_PERCENTAGE+PURPLE_PERCENTAGE)))
+        return PURPLE;
+    return CLEANER;
+
+}
+
+std::string printVector(const std::vector<int>& v) {
+    std::stringstream ss;
+    for (int elem : v) {
+        ss << elem << " ";
+    }
+    std::string result = ss.str();
+    result.erase(result.find_last_not_of(" ") + 1);
+    return result;
+}
+
+void removeElement(std::vector<int>& v, int elem) {
+    auto it = std::find(v.begin(), v.end(), elem);
+    if (it != v.end()) {
+        v.erase(it);
+    }
+}
