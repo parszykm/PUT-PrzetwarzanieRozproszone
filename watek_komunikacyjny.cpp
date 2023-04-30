@@ -1,5 +1,6 @@
 #include "main.h"
 #include "watek_komunikacyjny.h"
+#include<iostream>
 // #include "queue.h"
 
 /* wątek komunikacyjny; zajmuje się odbiorem i reakcją na komunikaty */
@@ -19,28 +20,26 @@ void *startKomWatek(void *ptr)
         pthread_mutex_unlock( &clockMut );
         switch ( status.MPI_TAG ) {
 	    case REQUEST: 
+        {
                 // println("Ktoś coś prosi. A niech ma!")
-                //TODO: Dodawanie do kolejki procesu z requestem
-                println("Request przyszedl od %d", pakiet.src);
-                pthread_mutex_lock( &queueMut );
+                // println("Request przyszedl od %d", pakiet.src);                 
                     sectionQueue.push(pakiet);
-                pthread_mutex_unlock( &queueMut );
                 debug("Ktoś coś prosi. A niech ma!")
-
-		sendPacket( 0, status.MPI_SOURCE, ACK );
-	    break;
+                sendPacket( 0, status.MPI_SOURCE, ACK ); 
+	            break;
+        }
 	    case ACK: 
                 debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
+                // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
 	        ackCount++; /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
-        case RELEASE:
-            // debug("Dostałem REALEASE od %d, usuwam %d z kolejki", status.MPI_SOURCE, sectionQueue.top().src);
-            pthread_mutex_lock( &queueMut );
-                sectionQueue.pop();
-            pthread_mutex_unlock( &queueMut );
             break;
-        //TODO: dodac case dla RELEASE
-	    break;
+        case RELEASE:
+        {
+            // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
+            // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
+            sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
+            break;
+        }
 	    default:
 	    break;
         }

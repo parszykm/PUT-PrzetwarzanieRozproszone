@@ -39,13 +39,15 @@ void inicjuj_typ_pakietu()
        brzydzimy się czymś w rodzaju MPI_Send(&typ, sizeof(pakiet_t), MPI_BYTE....
     */
     /* sklejone z stackoverflow */
-    int       blocklengths[NITEMS] = {1,1,1};
-    MPI_Datatype typy[NITEMS] = {MPI_INT, MPI_INT, MPI_INT};
+    int       blocklengths[NITEMS] = {1,1,1,1};
+    MPI_Datatype typy[NITEMS] = {MPI_INT, MPI_INT, MPI_INT, MPI_INT};
 
     MPI_Aint     offsets[NITEMS]; 
     offsets[0] = offsetof(packet_t, ts);
     offsets[1] = offsetof(packet_t, src);
     offsets[2] = offsetof(packet_t, data);
+    offsets[3] = offsetof(packet_t, processType);
+
 
     MPI_Type_create_struct(NITEMS, blocklengths, offsets, typy, &MPI_PAKIET_T);
 
@@ -86,6 +88,14 @@ std::string generateTypeForProcess(int rank, int size){
     return CLEANER;
 
 }
+int generateColorCode(std::string processType){
+    if(processType == BLUE)
+        return 34;
+    else if(processType == PURPLE)
+        return 35;
+    return 37;
+
+}
 
 std::string printVector(const std::vector<int>& v) {
     std::stringstream ss;
@@ -103,3 +113,22 @@ void removeElement(std::vector<int>& v, int elem) {
         v.erase(it);
     }
 }
+
+int colorEnemy(int colorInt){
+    std::string color = Int2ProcessType(colorInt);
+    if(color == BLUE) return processType2Int(PURPLE);
+    else if(color == PURPLE) return processType2Int(BLUE);
+    else return processType2Int(CLEANER);
+}
+
+extern int processType2Int(std::string processType){
+    if(processType == BLUE) return 0;
+    else if(processType == PURPLE) return 1;
+    else return 2;
+}
+extern std::string Int2ProcessType(int processType){
+    if(processType == 0) return BLUE;
+    else if(processType == 1) return PURPLE;
+    else return CLEANER;
+}
+int colorCode;

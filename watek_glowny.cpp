@@ -1,7 +1,7 @@
 #include "main.h"
 #include "watek_glowny.h"
 // #include "queue.h"
-std::vector<int> sekcja;
+// std::vector<int> sekcja;
 void mainLoop()
 {
     srandom(rank);
@@ -11,6 +11,7 @@ void mainLoop()
     while (stan != InFinish) {
 	switch (stan) {
 	    case InRun: 
+			if(processType == CLEANER) sleep(5); //Proces sprzątacza niech uruchamia się rzadziej od fioletowych i niebieskich
 			perc = random()%100;
 			if ( perc < 25 ) {
 					debug("Perc: %d", perc);
@@ -19,15 +20,12 @@ void mainLoop()
 					debug("Zmieniam stan na wysyłanie");
 					packet_t *pkt = new packet_t;
 					pkt->data = perc;
+					pkt->processType = processType2Int(processType);
 					ackCount = 0;
-					pthread_mutex_lock( &queueMut );
-						packet_t tmpPacket = {clockVar, rank, perc, processType};
-						sectionQueue.push(tmpPacket);
-						// printf("Ubiegam się %d - %d",sectionQueue.top().src, sectionQueue.empty());
-						// printf("PAKIET %d, %d, %d\n", clockVar, rank, perc);
-        			pthread_mutex_unlock( &queueMut );
-					// sectionQueue.push(*pkt);
-					//TODO: Dodawanie do kolejki siebie
+						packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType)};
+						bool res = sectionQueue.isAvailable(*tmpPacket);
+						if(!res) break;
+						sectionQueue.push(*tmpPacket);
 					for (int i=0;i<=size-1;i++)
 					if (i!=rank)
 						sendPacket( pkt, i, REQUEST);
@@ -42,34 +40,21 @@ void mainLoop()
 				debug("Skończyłem myśleć");
 			break;
 	    case InWant:
-			// printf("%d - %d",sectionQueue.top().src, sectionQueue.empty());
-			println("Czekam na wejście do sekcji krytycznej");
-			pthread_mutex_lock( &queueMut );
-				printf("rank: %d, size: %d\n", rank, sectionQueue.getQueue().size());
-			pthread_mutex_unlock( &queueMut );
-			// pthread_mutex_lock( &queueMut );
-			// 	showQueue();
-			// pthread_mutex_unlock( &queueMut );
-			
+			println("Czekam na wejście do sekcji krytycznej");			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
-			// println("warunek: %b", ackCount == size - 1 && sectionQueue.top().src == rank);
-			// printf("%d", rank);
-			if ( ackCount == size - 1 && 
-			// sectionQueue.isCandidate(rank, hotelCapacity)
-			sectionQueue.top().src == rank 
-			) {
+			if ( ackCount == size - 1 &&  sectionQueue.isCandidate(rank, hotelCapacity, processType)
+			){
 				changeState(InSection);
-				sekcja.push_back(rank);
 			}
 			break;
 	    case InSection:
 		{
 		// tutaj zapewne jakiś muteks albo zmienna warunkowa
 
-		std::string sectionState = printVector(sekcja); 
+		// std::string sectionState = printVector(sekcja); 
 		println("Jestem w sekcji krytycznej");
-		std::cout<< sectionState<<std::endl;
+		// std::cout<< sectionState<<std::endl;
 
 		    sleep(5);
 		//if ( perc < 25 ) {
@@ -80,13 +65,12 @@ void mainLoop()
 		    debug("Zmieniam stan na wysyłanie");
 		    packet_t *pkt = new packet_t;
 		    pkt->data = perc;
-			pthread_mutex_lock( &queueMut );
-					sectionQueue.pop();
-					removeElement(sekcja, rank);
-			pthread_mutex_unlock( &queueMut );
+			sectionQueue.removeBySrc(rank);
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
-			    sendPacket( pkt, (rank+1)%size, RELEASE);
+			{
+			    sendPacket( pkt, i, RELEASE);
+			}
 		    changeState( InRun );
 		    free(pkt);
 		//}

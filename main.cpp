@@ -73,6 +73,7 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     processType = generateTypeForProcess(rank, size);
+    colorCode = generateColorCode(processType);
     /* startKomWatek w watek_komunikacyjny.c 
      * w vi najedź kursorem na nazwę pliku i wciśnij klawisze gf
      * powrót po wciśnięciu ctrl+6
@@ -90,3 +91,4 @@ int main(int argc, char **argv)
     finalizuj();
     return 0;
 }
+
