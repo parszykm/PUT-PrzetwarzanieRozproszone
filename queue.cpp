@@ -59,6 +59,18 @@ bool ProcessQueue::isCandidate(int rank, int n, std::string processType){
     return false;
 }
 
+bool ProcessQueue::isOnFirstNthPlaces(int rank, int n){
+    std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
+    auto it = m_packets->begin();
+    int index = 0;
+    while(it != m_packets->end() && index < n){  
+        if(it->src == rank) return true; // proces jest w pierwszych n-miejscach i nie ma przed nim sprzątacza   
+        index++;
+        ++it;
+    }
+    return false;
+}
+
 packet_t ProcessQueue::top(){
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
 
@@ -71,4 +83,6 @@ void ProcessQueue::removeBySrc(int src) {
     m_packets->erase(std::remove_if(m_packets->begin(), m_packets->end(),
         [src](const packet_t& packet) { return packet.src == src; }), m_packets->end());
 }
+
 ProcessQueue sectionQueue;
+ProcessQueue guidesQueue;

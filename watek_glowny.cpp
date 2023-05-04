@@ -56,7 +56,14 @@ void mainLoop()
 		println("Jestem w sekcji krytycznej");
 		// std::cout<< sectionState<<std::endl;
 
+			//TODO: wysyłanie REQUEST z polem type=przewodnik do wszystkich i czeka na ackCount = N - P + push do guidesQueue
+			// if ( ackCount == size - 1 &&  sectionQueue.isOnFirstNthPlaces(rank, hotelCapacity)
+			// ){
+			// }
+			//else break;
 		    sleep(5);
+
+			//TODO: wysyłanie RELEASE dla guidesQueue i removeBySrc siebie
 		//if ( perc < 25 ) {
 		    debug("Perc: %d", perc);
 

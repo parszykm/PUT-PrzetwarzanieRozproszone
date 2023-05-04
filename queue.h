@@ -15,6 +15,7 @@ public:
     packet_t top();
     bool isCandidate(int rank, int n, std::string processType);
     void removeBySrc(int src);
+    bool isOnFirstNthPlaces(int rank, int n);
     
 
 
@@ -25,3 +26,4 @@ private:
 
 
 extern ProcessQueue sectionQueue;
+extern ProcessQueue guidesQueue;

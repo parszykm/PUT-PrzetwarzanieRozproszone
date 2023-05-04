@@ -21,6 +21,7 @@ void *startKomWatek(void *ptr)
         switch ( status.MPI_TAG ) {
 	    case REQUEST: 
         {
+                //TODO: jeżeli type=przewodnik to push do guidesQueue
                 // println("Ktoś coś prosi. A niech ma!")
                 // println("Request przyszedl od %d", pakiet.src);                 
                     sectionQueue.push(pakiet);
@@ -29,12 +30,14 @@ void *startKomWatek(void *ptr)
 	            break;
         }
 	    case ACK: 
+                //TODO: jeżeli type=przewodnik
                 debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
                 // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
 	        ackCount++; /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
             break;
         case RELEASE:
         {
+             //TODO: jeżeli type=przewodnik removeBySrc do guidesQueue
             // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
             // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
             sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
