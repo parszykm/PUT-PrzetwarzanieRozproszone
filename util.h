@@ -14,11 +14,12 @@ typedef struct {
     int src;  
     int data;     /* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą */
     int processType; /* typ procesu = {0 - niebieski, 1 - fioletowy, 2 - sprzątacz}*/
+    int typeGuide; /*pole okreslajace czy ubiegamy sie o zasob jakim jest przewodnik */
 } packet_t;
 
 extern int clockVar;
-/* packet_t ma trzy pola, więc NITEMS=3. Wykorzystane w inicjuj_typ_pakietu */
-#define NITEMS 4
+/* packet_t ma pięc pola, więc NITEMS=5. Wykorzystane w inicjuj_typ_pakietu */
+#define NITEMS 5
 
 /* Typy wiadomości */
 /* TYPY PAKIETÓW */

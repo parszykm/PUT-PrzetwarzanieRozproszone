@@ -22,25 +22,40 @@ void *startKomWatek(void *ptr)
 	    case REQUEST: 
         {
                 //TODO: jeżeli type=przewodnik to push do guidesQueue
-                // println("Ktoś coś prosi. A niech ma!")
-                // println("Request przyszedl od %d", pakiet.src);                 
+                if (pakiet.typeGuide == TRUE) {
+                    guidesQueue.push(pakiet);
+                    sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                } else {
+                    // println("Ktoś coś prosi. A niech ma!")
+                    // println("Request przyszedl od %d", pakiet.src);                 
                     sectionQueue.push(pakiet);
-                debug("Ktoś coś prosi. A niech ma!")
-                sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                    debug("Ktoś coś prosi. A niech ma!")
+                    sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                }
 	            break;
         }
 	    case ACK: 
                 //TODO: jeżeli type=przewodnik
-                debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-	        ackCount++; /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
+                printf("czy request o przewodnika %d ?", pakiet.typeGuide);
+                if (pakiet.typeGuide == TRUE) {
+                    ackGuides++;
+                } else {
+                    debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
+                    // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
+	                ackCount++;
+                }
+                /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
             break;
         case RELEASE:
         {
              //TODO: jeżeli type=przewodnik removeBySrc do guidesQueue
+            if (pakiet.typeGuide == TRUE) {
+                guidesQueue.removeBySrc(pakiet.src);
+            } else {
+                sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
+            }
             // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
             // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
-            sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
             break;
         }
 	    default:

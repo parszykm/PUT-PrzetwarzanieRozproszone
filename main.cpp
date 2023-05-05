@@ -13,10 +13,12 @@
  */
 int rank, size;
 int ackCount = 0;
+int ackGuides = 0;
 int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);
 int cleanerCount = size - blueCount - purpleCount;
 std::string processType;
 int hotelCapacity = 2;
+int guides = 2;
 /* 
  * Każdy proces ma dwa wątki - główny i komunikacyjny
  * w plikach, odpowiednio, watek_glowny.c oraz (siurpryza) watek_komunikacyjny.c
