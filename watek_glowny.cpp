@@ -59,15 +59,12 @@ void mainLoop()
 			//TODO: wysyłanie REQUEST z polem type=przewodnik do wszystkich i czeka na ackCount = N - P + push do guidesQueue
 
 			packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), TRUE};
-			bool res = guidesQueue.isAvailable(*tmpPacket);
-			if(!res) break;
-			printf("available");
 			guidesQueue.push(*tmpPacket);
 			for (int i=0;i<=size-1;i++){
 				if (i!=rank) sendPacket( tmpPacket, i, REQUEST);
 			}
 			printf("potwierdzenia o przewodnika %d\n", ackGuides);
-			if ( ackGuides == size - guides &&  sectionQueue.isOnFirstNthPlaces(rank, guides)){
+			if ( ackGuides == size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
 				println("Jestem z przewodnikiem");
 				sleep(5);
 			}

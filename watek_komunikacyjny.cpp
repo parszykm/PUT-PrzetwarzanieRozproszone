@@ -36,9 +36,9 @@ void *startKomWatek(void *ptr)
         }
 	    case ACK: 
                 //TODO: jeżeli type=przewodnik
-                printf("czy request o przewodnika %d ?", pakiet.typeGuide);
                 if (pakiet.typeGuide == TRUE) {
                     ackGuides++;
+                    printf("stan ack guides%d\n", ackGuides);
                 } else {
                     debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
                     // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
