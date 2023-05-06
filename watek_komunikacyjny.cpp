@@ -21,26 +21,50 @@ void *startKomWatek(void *ptr)
         switch ( status.MPI_TAG ) {
 	    case REQUEST: 
         {
+                // println("Czy REQUEST dotyczy guida %d", pakiet.typeGuide);
                 //TODO: jeżeli type=przewodnik to push do guidesQueue
-                // println("Ktoś coś prosi. A niech ma!")
-                // println("Request przyszedl od %d", pakiet.src);                 
+                packet_t *tmpPacket = new packet_t;
+                if (pakiet.typeGuide == 1) {
+                    guidesQueue.push(pakiet);
+                    tmpPacket->typeGuide = 1;
+                    sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
+                    
+                } else {
+                    // println("Ktoś coś prosi. A niech ma!")
+                    // println("Request przyszedl od %d", pakiet.src);                 
                     sectionQueue.push(pakiet);
-                debug("Ktoś coś prosi. A niech ma!")
-                sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                    debug("Ktoś coś prosi. A niech ma!")
+                    tmpPacket->typeGuide = 0;
+                    sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
+                }
+                free(tmpPacket);
 	            break;
         }
 	    case ACK: 
-                //TODO: jeżeli type=przewodnik
-                debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-	        ackCount++; /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
+        {
+                //TODO: jeżeli type=przewodnik 
+                //println("Czy pakiet dotyczy guida %d", pakiet.typeGuide);
+                if (pakiet.typeGuide == 1) {
+                    ackGuides++;
+                    // println("stan ack guides %d dla procesu %d\n", ackGuides, rank);
+                } else {
+                    debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
+                    // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
+	                ackCount++;
+                }
+                /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
             break;
+        }
         case RELEASE:
         {
              //TODO: jeżeli type=przewodnik removeBySrc do guidesQueue
+            if (pakiet.typeGuide == 1) {
+                guidesQueue.removeBySrc(pakiet.src);
+            } else {
+                sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
+            }
             // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
             // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
-            sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
             break;
         }
 	    default:

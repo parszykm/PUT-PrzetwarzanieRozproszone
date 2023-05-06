@@ -20,6 +20,6 @@ run: main Makefile tags
 	mpirun -oversubscribe -np 8 ./main
 
 run-debug: main Makefile tags
-	mpirun -oversubscribe -np 8 xterm -hold -e gdb ./main
+	mpirun -oversubscribe -np 4 xterm -hold -e gdb ./main
 
 # valgrind

@@ -22,8 +22,10 @@
 extern int rank;
 extern int size;
 extern int ackCount;
+extern int ackGuides;
 extern int blueCount, purpleCount, cleanerCount;
 extern int hotelCapacity;
+extern int guides;
 extern std::string processType;
 extern pthread_t threadKom;
 
