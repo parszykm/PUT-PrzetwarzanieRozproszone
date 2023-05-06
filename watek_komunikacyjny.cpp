@@ -23,24 +23,26 @@ void *startKomWatek(void *ptr)
         {
                 // println("Czy REQUEST dotyczy guida %d", pakiet.typeGuide);
                 //TODO: jeżeli type=przewodnik to push do guidesQueue
+                packet_t *tmpPacket = new packet_t;
                 if (pakiet.typeGuide == 1) {
                     guidesQueue.push(pakiet);
-                    packet_t *tmpPacket = new packet_t;
                     tmpPacket->typeGuide = 1;
                     sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
-                    free(tmpPacket);
+                    
                 } else {
                     // println("Ktoś coś prosi. A niech ma!")
                     // println("Request przyszedl od %d", pakiet.src);                 
                     sectionQueue.push(pakiet);
                     debug("Ktoś coś prosi. A niech ma!")
-                    sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                    tmpPacket->typeGuide = 0;
+                    sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
                 }
+                free(tmpPacket);
 	            break;
         }
 	    case ACK: 
         {
-                //TODO: jeżeli type=przewodnik
+                //TODO: jeżeli type=przewodnik 
                 //println("Czy pakiet dotyczy guida %d", pakiet.typeGuide);
                 if (pakiet.typeGuide == 1) {
                     ackGuides++;

@@ -44,7 +44,7 @@ void mainLoop()
 		}
 	    case InWant:
 		{
-			println("Czekam na wejście do sekcji krytycznej");			
+			println("Czekam na wejście do sekcji krytycznej, ackCount = %d", ackCount);			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
 			if ( ackCount == size - 1 &&  sectionQueue.isCandidate(rank, hotelCapacity, processType)
@@ -58,8 +58,11 @@ void mainLoop()
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 
 			// std::string sectionState = printVector(sekcja); 
-			println("Jestem w sekcji krytycznej");
-			if (processType == CLEANER) changeState(InSectionGuide);
+			println("Jestem w sekcji krytycznej typ procesu %s , cleaner %s", processType.c_str(), CLEANER);
+			if (processType == CLEANER) {
+				changeState(InSectionGuide);
+				break;
+			}
 			// std::cout<< sectionState<<std::endl;
 			ackGuides = 0;
 			//TODO: wysyłanie REQUEST z polem type=przewodnik do wszystkich i czeka na ackCount = N - P + push do guidesQueue
@@ -77,7 +80,7 @@ void mainLoop()
 		case InWantGuide:
 		{
 			println("Czekam na przewodnika. Potwierdzenia o przewodnika %d\n", ackGuides);
-			if ( ackGuides >= size - guides - 1 &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
+			if ( ackGuides >= size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
 				changeState(InSectionGuide);
 			}
 			break;
@@ -85,21 +88,21 @@ void mainLoop()
 		case InSectionGuide:
 		{
 			if (processType != CLEANER){
-							println("Jestem z przewodnikiem!");
-			sleep(5);
-			println("Kończę wycieczkę z przewodnikiem")
-		    packet_t *pkt = new packet_t;
-		    pkt->data = perc;
-			pkt->typeGuide = 1;
-			guidesQueue.removeBySrc(rank);
-		    for (int i=0;i<=size-1;i++)
-			if (i!=rank)
-			{
-			    sendPacket( pkt, i, RELEASE);
-			}
-			free(pkt);
-			//TODO: wysyłanie RELEASE dla guidesQueue i removeBySrc siebie
-		    debug("Perc: %d", perc);
+				println("Jestem z przewodnikiem!");
+				sleep(5);
+				println("Kończę wycieczkę z przewodnikiem")
+				packet_t *pkt = new packet_t;
+				pkt->data = perc;
+				pkt->typeGuide = 1;
+				guidesQueue.removeBySrc(rank);
+				for (int i=0;i<=size-1;i++)
+				if (i!=rank)
+				{
+					sendPacket( pkt, i, RELEASE);
+				}
+				free(pkt);
+				//TODO: wysyłanie RELEASE dla guidesQueue i removeBySrc siebie
+				debug("Perc: %d", perc);
 			}
 
 
@@ -108,6 +111,7 @@ void mainLoop()
 		    debug("Zmieniam stan na wysyłanie");
 		    packet_t *pkt_end = new packet_t;
 		    pkt_end->data = perc;
+			pkt_end->typeGuide = 0;
 			sectionQueue.removeBySrc(rank);
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
