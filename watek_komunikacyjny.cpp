@@ -21,10 +21,14 @@ void *startKomWatek(void *ptr)
         switch ( status.MPI_TAG ) {
 	    case REQUEST: 
         {
+                // println("Czy REQUEST dotyczy guida %d", pakiet.typeGuide);
                 //TODO: jeżeli type=przewodnik to push do guidesQueue
-                if (pakiet.typeGuide == TRUE) {
+                if (pakiet.typeGuide == 1) {
                     guidesQueue.push(pakiet);
-                    sendPacket( 0, status.MPI_SOURCE, ACK ); 
+                    packet_t *tmpPacket = new packet_t;
+                    tmpPacket->typeGuide = 1;
+                    sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
+                    free(tmpPacket);
                 } else {
                     // println("Ktoś coś prosi. A niech ma!")
                     // println("Request przyszedl od %d", pakiet.src);                 
@@ -35,10 +39,12 @@ void *startKomWatek(void *ptr)
 	            break;
         }
 	    case ACK: 
+        {
                 //TODO: jeżeli type=przewodnik
-                if (pakiet.typeGuide == TRUE) {
+                //println("Czy pakiet dotyczy guida %d", pakiet.typeGuide);
+                if (pakiet.typeGuide == 1) {
                     ackGuides++;
-                    printf("stan ack guides%d\n", ackGuides);
+                    // println("stan ack guides %d dla procesu %d\n", ackGuides, rank);
                 } else {
                     debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
                     // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
@@ -46,10 +52,11 @@ void *startKomWatek(void *ptr)
                 }
                 /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
             break;
+        }
         case RELEASE:
         {
              //TODO: jeżeli type=przewodnik removeBySrc do guidesQueue
-            if (pakiet.typeGuide == TRUE) {
+            if (pakiet.typeGuide == 1) {
                 guidesQueue.removeBySrc(pakiet.src);
             } else {
                 sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
