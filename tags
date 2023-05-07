@@ -71,9 +71,9 @@ generateColorCode	util.cpp	/^int generateColorCode(std::string processType){$/;"
 generateTypeForProcess	util.cpp	/^std::string generateTypeForProcess(int rank, int size){$/;"	f	typeref:typename:std::string
 getQueue	queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
 getQueue	queue/queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
-guides	main.cpp	/^int guides = 2;$/;"	v	typeref:typename:int
+guides	main.cpp	/^int guides = 5;$/;"	v	typeref:typename:int
 guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v	typeref:typename:ProcessQueue
-hotelCapacity	main.cpp	/^int hotelCapacity = 2;$/;"	v	typeref:typename:int
+hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v	typeref:typename:int
 hotelIndex	util.h	/^    int hotelIndex;  \/* indeks hotelu, którego dotyczy pakiet*\/$/;"	m	struct:__anon213916590108	typeref:typename:int
 hotelNumber	util.h	/^#define hotelNumber /;"	d
 inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f	typeref:typename:void

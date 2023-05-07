@@ -10,7 +10,7 @@ void mainLoop()
 	int hotelChosen;
 	ProcessQueue *hotel = nullptr;
     while (stan != InFinish) {
-		auto it = sectionQueues.begin();
+
 	switch (stan) {
 	    case InRun: 
 		{
@@ -25,6 +25,7 @@ void mainLoop()
 					pkt->data = perc;
 					pkt->processType = processType2Int(processType);
 					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
+					auto it = sectionQueues.begin();
 					while(it != sectionQueues.end()){
 						println("Sprawdzam hotel %ld",it - sectionQueues.begin());
 						if(it->isAvailable(*tmpPacket)){
@@ -62,7 +63,7 @@ void mainLoop()
 		}
 	    case InWant:
 		{
-			println("Czekam na wejście do sekcji krytycznej do hotelu %d", hotelChosen);			
+			println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
 
@@ -133,7 +134,7 @@ void mainLoop()
 		    packet_t *pkt_end = new packet_t;
 		    pkt_end->data = perc;
 			pkt_end->typeGuide = 0;
-			pkt_end->hotelIndex = it - sectionQueues.begin();
+			pkt_end->hotelIndex = hotelChosen;
 			hotel->removeBySrc(rank);
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
