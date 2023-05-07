@@ -31,8 +31,16 @@ void *startKomWatek(void *ptr)
                     
                 } else {
                     // println("Ktoś coś prosi. A niech ma!")
-                    // println("Request przyszedl od %d", pakiet.src);                 
-                    sectionQueue.push(pakiet);
+                    // println("Request przyszedl od %d", pakiet.src);
+                    auto it = sectionQueues.begin();
+                    while(it != sectionQueues.end()){
+                        if(it - sectionQueues.begin() == pakiet.hotelIndex){
+                            it->push(pakiet);
+                            break;
+                        }
+                        ++it;
+                    }                
+                    // sectionQueue.push(pakiet);
                     debug("Ktoś coś prosi. A niech ma!")
                     tmpPacket->typeGuide = 0;
                     sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
@@ -61,7 +69,15 @@ void *startKomWatek(void *ptr)
             if (pakiet.typeGuide == 1) {
                 guidesQueue.removeBySrc(pakiet.src);
             } else {
-                sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
+                auto it = sectionQueues.begin();
+                while(it != sectionQueues.end()){
+                    if(it - sectionQueues.begin() == pakiet.hotelIndex){
+                        it->removeBySrc(pakiet.src);
+                        break;
+                    }
+                    ++it;
+                }  
+                // sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
             }
             // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
             // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);

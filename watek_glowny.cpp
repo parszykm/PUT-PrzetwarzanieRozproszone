@@ -7,8 +7,10 @@ void mainLoop()
     srandom(rank);
     int tag;
     int perc;
-
+	int hotelChosen;
+	ProcessQueue *hotel = nullptr;
     while (stan != InFinish) {
+		auto it = sectionQueues.begin();
 	switch (stan) {
 	    case InRun: 
 		{
@@ -22,11 +24,27 @@ void mainLoop()
 					packet_t *pkt = new packet_t;
 					pkt->data = perc;
 					pkt->processType = processType2Int(processType);
+					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
+					while(it != sectionQueues.end()){
+						println("Sprawdzam hotel %ld",it - sectionQueues.begin());
+						if(it->isAvailable(*tmpPacket)){
+							tmpPacket->hotelIndex = it - sectionQueues.begin();
+							it->push(*tmpPacket);
+							pkt->hotelIndex = it - sectionQueues.begin();
+							hotelChosen = (int)(it - sectionQueues.begin());
+							hotel = &(*it);
+							println("Wybrałem hotel %d", hotelChosen);
+							break;
+						}
+						++it;
+					}
+					if(tmpPacket->hotelIndex == -1){
+						break;
+					}
 					ackCount = 0;
-						packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0};
-						bool res = sectionQueue.isAvailable(*tmpPacket);
-						if(!res) break;
-						sectionQueue.push(*tmpPacket);
+						// bool res = sectionQueue.isAvailable(*tmpPacket);
+						// if(!res) break;
+						// sectionQueue.push(*tmpPacket);
 					for (int i=0;i<=size-1;i++)
 					if (i!=rank)
 						sendPacket( pkt, i, REQUEST);
@@ -44,10 +62,13 @@ void mainLoop()
 		}
 	    case InWant:
 		{
-			println("Czekam na wejście do sekcji krytycznej, ackCount = %d", ackCount);			
+			println("Czekam na wejście do sekcji krytycznej do hotelu %d", hotelChosen);			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
-			if ( ackCount == size - 1 &&  sectionQueue.isCandidate(rank, hotelCapacity, processType)
+
+			if ( ackCount == size - 1 &&  
+			hotel->isCandidate(rank, hotelCapacity, processType)
+			// sectionQueue.isCandidate(rank, hotelCapacity, processType)
 			){
 				changeState(InSection);
 			}
@@ -58,7 +79,7 @@ void mainLoop()
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 
 			// std::string sectionState = printVector(sekcja); 
-			println("Jestem w sekcji krytycznej typ procesu %s , cleaner %s", processType.c_str(), CLEANER);
+			println("Jestem w sekcji krytycznej(hotelu) %d", hotelChosen);
 			if (processType == CLEANER) {
 				changeState(InSectionGuide);
 				break;
@@ -79,7 +100,7 @@ void mainLoop()
 		}
 		case InWantGuide:
 		{
-			println("Czekam na przewodnika. Potwierdzenia o przewodnika %d\n", ackGuides);
+			println("Czekam na przewodnika.\n");
 			if ( ackGuides >= size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
 				changeState(InSectionGuide);
 			}
@@ -112,7 +133,8 @@ void mainLoop()
 		    packet_t *pkt_end = new packet_t;
 		    pkt_end->data = perc;
 			pkt_end->typeGuide = 0;
-			sectionQueue.removeBySrc(rank);
+			pkt_end->hotelIndex = it - sectionQueues.begin();
+			hotel->removeBySrc(rank);
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
 			{

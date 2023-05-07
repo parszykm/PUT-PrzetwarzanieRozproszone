@@ -84,5 +84,6 @@ void ProcessQueue::removeBySrc(int src) {
         [src](const packet_t& packet) { return packet.src == src; }), m_packets->end());
 }
 
-ProcessQueue sectionQueue;
+std::vector<ProcessQueue> sectionQueues(hotelNumber);
 ProcessQueue guidesQueue;
+ProcessQueue sectionQueue;

@@ -15,11 +15,12 @@ typedef struct {
     int data;     /* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą */
     int processType; /* typ procesu = {0 - niebieski, 1 - fioletowy, 2 - sprzątacz}*/
     int typeGuide; /*pole okreslajace czy ubiegamy sie o zasob jakim jest przewodnik */
+    int hotelIndex;  /* indeks hotelu, którego dotyczy pakiet*/
 } packet_t;
 
 extern int clockVar;
-/* packet_t ma pięc pola, więc NITEMS=5. Wykorzystane w inicjuj_typ_pakietu */
-#define NITEMS 5
+/* packet_t ma szesc pól, więc NITEMS=5. Wykorzystane w inicjuj_typ_pakietu */
+#define NITEMS 6
 
 /* Typy wiadomości */
 /* TYPY PAKIETÓW */
@@ -38,7 +39,7 @@ extern int clockVar;
 #define BLUE_INT 0
 #define PURPLE_INT 1
 #define CLEANER_INT 2
-
+#define hotelNumber 5
 extern int colorCode;
 
 extern MPI_Datatype MPI_PAKIET_T;

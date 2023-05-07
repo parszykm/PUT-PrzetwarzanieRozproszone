@@ -21,5 +21,7 @@ run: main Makefile tags
 
 run-debug: main Makefile tags
 	mpirun -oversubscribe -np 4 xterm -hold -e gdb ./main
+run-big: main Makefile tags
+	mpirun -oversubscribe -np 16 ./main
 
 # valgrind

@@ -25,5 +25,6 @@ private:
 };
 
 
-extern ProcessQueue sectionQueue;
+extern std::vector<ProcessQueue> sectionQueues;
 extern ProcessQueue guidesQueue;
+extern ProcessQueue sectionQueue;
