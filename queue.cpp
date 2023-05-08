@@ -43,7 +43,11 @@ std::vector<packet_t> *ProcessQueue::getQueue(){
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     return m_packets;
 }
+int ProcessQueue::getQueueSize(){
+    std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
+    return m_packets->size();
 
+}
 bool ProcessQueue::isCandidate(int rank, int n, std::string processType){
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     if( processType != CLEANER && (*m_packets)[0].processType == CLEANER_INT) return false; // sprzątacz jest na 1 - miejscu blokuje inne procesy

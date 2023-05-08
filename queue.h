@@ -16,6 +16,7 @@ public:
     bool isCandidate(int rank, int n, std::string processType);
     void removeBySrc(int src);
     bool isOnFirstNthPlaces(int rank, int n);
+    int getQueueSize();
     
 
 

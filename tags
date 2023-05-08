@@ -71,6 +71,7 @@ generateColorCode	util.cpp	/^int generateColorCode(std::string processType){$/;"
 generateTypeForProcess	util.cpp	/^std::string generateTypeForProcess(int rank, int size){$/;"	f	typeref:typename:std::string
 getQueue	queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
 getQueue	queue/queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
+getQueueSize	queue.cpp	/^int ProcessQueue::getQueueSize(){$/;"	f	class:ProcessQueue	typeref:typename:int
 guides	main.cpp	/^int guides = 5;$/;"	v	typeref:typename:int
 guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v	typeref:typename:ProcessQueue
 hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v	typeref:typename:int

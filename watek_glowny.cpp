@@ -8,7 +8,17 @@ void mainLoop()
     int tag;
     int perc;
 	int hotelChosen;
+	int randomHotelIndex;
 	ProcessQueue *hotel = nullptr;
+	int colorPercentage;
+	
+		if(processType == BLUE)
+			colorPercentage = BLUE_PERCENTAGE;
+		else if(processType == PURPLE)
+			colorPercentage = PURPLE_PERCENTAGE;
+		else
+			colorPercentage = CLEANER_PERCENTAGE;
+
     while (stan != InFinish) {
 
 	switch (stan) {
@@ -26,19 +36,39 @@ void mainLoop()
 					pkt->processType = processType2Int(processType);
 					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
 					auto it = sectionQueues.begin();
-					while(it != sectionQueues.end()){
-						println("Sprawdzam hotel %ld",it - sectionQueues.begin());
-						if(it->isAvailable(*tmpPacket)){
-							tmpPacket->hotelIndex = it - sectionQueues.begin();
-							it->push(*tmpPacket);
-							pkt->hotelIndex = it - sectionQueues.begin();
-							hotelChosen = (int)(it - sectionQueues.begin());
-							hotel = &(*it);
-							println("Wybrałem hotel %d", hotelChosen);
-							break;
+					if(processType == CLEANER){
+						
+						randomHotelIndex = ( std::rand() % ( hotelNumber + 1 ) ) - 1;
+						println("Wybrałem indeks hotelu %d do sprzątnięcia", randomHotelIndex);
+						while(it != sectionQueues.end() && (int)(it - sectionQueues.begin()) != randomHotelIndex){
+							++it;
 						}
-						++it;
+						tmpPacket->hotelIndex = it - sectionQueues.begin();
+						it->push(*tmpPacket);
+						pkt->hotelIndex = it - sectionQueues.begin();
+						hotelChosen = (int)(it - sectionQueues.begin());
+						hotel = &(*it);
+						println("Wybrałem hotel %d", hotelChosen);	
 					}
+					else{
+						while(it != sectionQueues.end()){
+
+							println("Sprawdzam hotel %ld",it - sectionQueues.begin());
+							if(it->isAvailable(*tmpPacket)){
+								tmpPacket->hotelIndex = it - sectionQueues.begin();
+								it->push(*tmpPacket);
+								pkt->hotelIndex = it - sectionQueues.begin();
+								hotelChosen = (int)(it - sectionQueues.begin());
+								hotel = &(*it);
+								println("Wybrałem hotel %d", hotelChosen);
+								if(it->getQueueSize() < size*colorPercentage*0.5){
+									break;
+								}
+								// break;
+							}
+							++it;
+						}
+					}				
 					if(tmpPacket->hotelIndex == -1){
 						break;
 					}
