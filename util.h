@@ -55,6 +55,8 @@ extern state_t stan;
 extern pthread_mutex_t stateMut;
 extern pthread_mutex_t clockMut;
 extern pthread_mutex_t queueMut;
+extern pthread_mutex_t wantMut;
+extern pthread_cond_t cond;
 /* zmiana stanu, obwarowana muteksem */
 void changeState( state_t );
 extern std::string printVector(const std::vector<int>& v);

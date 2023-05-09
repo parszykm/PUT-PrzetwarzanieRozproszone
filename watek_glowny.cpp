@@ -53,15 +53,16 @@ void mainLoop()
 					else{
 						while(it != sectionQueues.end()){
 
-							println("Sprawdzam hotel %ld",it - sectionQueues.begin());
+							//println("Sprawdzam hotel %ld",it - sectionQueues.begin());
 							if(it->isAvailable(*tmpPacket)){
 								tmpPacket->hotelIndex = it - sectionQueues.begin();
 								it->push(*tmpPacket);
 								pkt->hotelIndex = it - sectionQueues.begin();
 								hotelChosen = (int)(it - sectionQueues.begin());
 								hotel = &(*it);
-								println("Wybrałem hotel %d", hotelChosen);
+								
 								if(it->getQueueSize() < size*colorPercentage*0.5){
+									println("Wybrałem hotel %d", hotelChosen);
 									break;
 								}
 								// break;
@@ -96,13 +97,23 @@ void mainLoop()
 			println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
 			// tutaj zapewne jakiś muteks albo zmienna warunkowa
 			// bo aktywne czekanie jest BUE
-
-			if ( ackCount == size - 1 &&  
-			hotel->isCandidate(rank, hotelCapacity, processType)
-			// sectionQueue.isCandidate(rank, hotelCapacity, processType)
-			){
-				changeState(InSection);
+			pthread_mutex_lock(&wantMut);
+			while (ackCount != size - 1 && !hotel->isCandidate(rank, hotelCapacity, processType)){
+				//std::cout << hotel->isCandidate(rank, hotelCapacity, processType) <<std::endl;
+				println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
+				pthread_cond_wait(&cond, &wantMut);	
 			}
+			pthread_mutex_unlock(&wantMut);
+			changeState(InSection);
+			// // sectionQueue.isCandidate(rank, hotelCapacity, processType)
+			// println("wchodze do sekcji krytycznej do hotelu %d, dostałem ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
+			
+			// if ( ackCount == size - 1 &&  
+			// hotel->isCandidate(rank, hotelCapacity, processType)
+			// // sectionQueue.isCandidate(rank, hotelCapacity, processType)
+			// ){
+			// 	changeState(InSection);
+			// }
 			break;
 		}
 	    case InSection:
@@ -132,9 +143,18 @@ void mainLoop()
 		case InWantGuide:
 		{
 			println("Czekam na przewodnika.\n");
-			if ( ackGuides >= size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
-				changeState(InSectionGuide);
+			pthread_mutex_lock(&wantMut);
+			while (ackGuides < size - guides && !guidesQueue.isOnFirstNthPlaces(rank, guides)){
+				//std::cout << hotel->isCandidate(rank, hotelCapacity, processType) <<std::endl;
+				println("Czekam na przewodnika hotelu %d, ack %d", hotelChosen, ackGuides);			
+				pthread_cond_wait(&cond, &wantMut);	
 			}
+			pthread_mutex_unlock(&wantMut);
+			changeState(InSectionGuide);
+			// println("Czekam na przewodnika.\n");
+			// if ( ackGuides >= size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
+			// 	changeState(InSectionGuide);
+			// }
 			break;
 		}
 		case InSectionGuide:

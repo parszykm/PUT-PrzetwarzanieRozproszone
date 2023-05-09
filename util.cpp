@@ -16,6 +16,8 @@ int clockVar = 0;
 pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t clockMut = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t queueMut = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t wantMut = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 struct tagNames_t{
     const char *name;

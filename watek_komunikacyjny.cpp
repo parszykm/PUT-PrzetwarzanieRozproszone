@@ -53,12 +53,24 @@ void *startKomWatek(void *ptr)
                 //TODO: jeżeli type=przewodnik 
                 //println("Czy pakiet dotyczy guida %d", pakiet.typeGuide);
                 if (pakiet.typeGuide == 1) {
+                    //ackGuides++;
+                    pthread_mutex_lock(&wantMut);
                     ackGuides++;
+                    if(ackGuides == size - guides){
+                        pthread_mutex_unlock(&wantMut);
+                        pthread_cond_signal(&cond);
+                    } else {pthread_mutex_unlock(&wantMut);} 
                     // println("stan ack guides %d dla procesu %d\n", ackGuides, rank);
                 } else {
                     debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
                     // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-	                ackCount++;
+	                //ackCount++;
+                    pthread_mutex_lock(&wantMut);
+                    ackCount++;
+                    if(ackCount == size - 1){
+                        pthread_mutex_unlock(&wantMut);
+                        pthread_cond_signal(&cond);
+                    } else {pthread_mutex_unlock(&wantMut);} 
                 }
                 /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
             break;

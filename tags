@@ -1,11 +1,15 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/miko/Documents/proz/projekt/PUT-PrzetwarzanieRozproszone/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
-1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s
+!_TAG_PROGRAM_VERSION	5.9.0	//
+1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s	chapter:Obrażalscy kosmici
 ACK	util.h	/^#define ACK /;"	d
 APP_PKT	util.h	/^#define APP_PKT /;"	d
 BLUE	util.h	/^#define BLUE /;"	d
@@ -63,6 +67,7 @@ clockMut	util.cpp	/^pthread_mutex_t clockMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	
 clockVar	util.cpp	/^int clockVar = 0;$/;"	v	typeref:typename:int
 colorCode	util.cpp	/^int colorCode;/;"	v	typeref:typename:int
 colorEnemy	util.cpp	/^int colorEnemy(int colorInt){$/;"	f	typeref:typename:int
+cond	util.cpp	/^pthread_cond_t cond = PTHREAD_COND_INITIALIZER;$/;"	v	typeref:typename:pthread_cond_t
 data	queue/queue.h	/^    int data;$/;"	m	struct:__anonb3849fd40108	typeref:typename:int
 data	util.h	/^    int data;     \/* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą /;"	m	struct:__anon213916590108	typeref:typename:int
 debug	main.h	/^#define debug(/;"	d
@@ -135,3 +140,4 @@ top	queue/queue.cpp	/^packet_t ProcessQueue::top(){$/;"	f	class:ProcessQueue	typ
 ts	queue/queue.h	/^    int ts;$/;"	m	struct:__anonb3849fd40108	typeref:typename:int
 ts	util.h	/^    int ts;       \/* timestamp (zegar lamporta *\/$/;"	m	struct:__anon213916590108	typeref:typename:int
 typeGuide	util.h	/^    int typeGuide; \/*pole okreslajace czy ubiegamy sie o zasob jakim jest przewodnik *\/$/;"	m	struct:__anon213916590108	typeref:typename:int
+wantMut	util.cpp	/^pthread_mutex_t wantMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
