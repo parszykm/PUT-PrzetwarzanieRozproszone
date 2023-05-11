@@ -14,7 +14,8 @@ void ProcessQueue::push(packet_t& packet) {
 bool ProcessQueue::isAvailable(packet_t& packet) {
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     //Walidacja czy od tyłu wektora nie ma procesu innego koloru
-     for (auto rit = m_packets->rbegin(); rit != m_packets->rend(); ++rit) {
+    if(this->hotelState == Int2ProcessType(colorEnemy(packet.processType))) return false; // jeżeli stan hotelu jest przeciwny do koloru procesu to odrzuć
+    for (auto rit = m_packets->rbegin(); rit != m_packets->rend(); ++rit) {
         if(rit->processType == CLEANER_INT && rit->ts < packet.ts) break;
         if(rit->processType == colorEnemy(packet.processType)) return false;
      }
@@ -88,6 +89,10 @@ void ProcessQueue::removeBySrc(int src) {
         [src](const packet_t& packet) { return packet.src == src; }), m_packets->end());
 }
 
+ void ProcessQueue::setHotelState(std::string newHotelState){
+    std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
+    this->hotelState = newHotelState;
+ }
 std::vector<ProcessQueue> sectionQueues(hotelNumber);
 ProcessQueue guidesQueue;
 ProcessQueue sectionQueue;

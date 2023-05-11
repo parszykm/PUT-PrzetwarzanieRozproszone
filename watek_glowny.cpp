@@ -11,6 +11,7 @@ void mainLoop()
 	int randomHotelIndex;
 	ProcessQueue *hotel = nullptr;
 	int colorPercentage;
+	int leastLoaded;
 	
 		if(processType == BLUE)
 			colorPercentage = BLUE_PERCENTAGE;
@@ -24,16 +25,16 @@ void mainLoop()
 	switch (stan) {
 	    case InRun: 
 		{
-			if(processType == CLEANER) sleep(5); //Proces sprzątacza niech uruchamia się rzadziej od fioletowych i niebieskich
+			if(processType == CLEANER) sleep(5); //Proces sprzątacza niech uruchamia się rzadziej od fioletowych i niebieskich - co 5 sekund
 			perc = random()%100;
 			if ( perc < 25 ) {
 					debug("Perc: %d", perc);
 					println("Ubiegam się o sekcję krytyczną")
-
 					debug("Zmieniam stan na wysyłanie");
 					packet_t *pkt = new packet_t;
 					pkt->data = perc;
 					pkt->processType = processType2Int(processType);
+					leastLoaded = size + 1;
 					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
 					auto it = sectionQueues.begin();
 					if(processType == CLEANER){
@@ -51,86 +52,55 @@ void mainLoop()
 						println("Wybrałem hotel %d", hotelChosen);	
 					}
 					else{
+						// Przeszukiwanie hotelu, który jest dostępny dla danej fakcji i ma najmniejsze wypełnienie
 						while(it != sectionQueues.end()){
-
-							//println("Sprawdzam hotel %ld",it - sectionQueues.begin());
-							if(it->isAvailable(*tmpPacket)){
-								tmpPacket->hotelIndex = it - sectionQueues.begin();
-								it->push(*tmpPacket);
-								pkt->hotelIndex = it - sectionQueues.begin();
-								hotelChosen = (int)(it - sectionQueues.begin());
-								hotel = &(*it);
-								
-								if(it->getQueueSize() < size*colorPercentage*0.5){
-									println("Wybrałem hotel %d", hotelChosen);
-									break;
-								}
-								// break;
+							debug("Sprawdzam hotel %ld",it - sectionQueues.begin());
+							if(it->isAvailable(*tmpPacket) && it->getQueueSize() < leastLoaded){
+									leastLoaded = it->getQueueSize();
+									tmpPacket->hotelIndex = it - sectionQueues.begin();
+									it->push(*tmpPacket);
+									pkt->hotelIndex = it - sectionQueues.begin();
+									hotelChosen = (int)(it - sectionQueues.begin());
+									hotel = &(*it);
 							}
 							++it;
 						}
 					}				
 					if(tmpPacket->hotelIndex == -1){
-						break;
+						break; //Jeżeli nie znalazło dostępnego hotelu przerwij
 					}
+					println("Wybrałem hotel %d, stan -> %s", hotelChosen, hotel->hotelState.c_str());
 					ackCount = 0;
-						// bool res = sectionQueue.isAvailable(*tmpPacket);
-						// if(!res) break;
-						// sectionQueue.push(*tmpPacket);
 					for (int i=0;i<=size-1;i++)
 					if (i!=rank)
 						sendPacket( pkt, i, REQUEST);
-					changeState( InWant ); // w VI naciśnij ctrl-] na nazwie funkcji, ctrl+^ żeby wrócić
-							// :w żeby zapisać, jeżeli narzeka że w pliku są zmiany
-							// ewentualnie wciśnij ctrl+w ] (trzymasz ctrl i potem najpierw w, potem ]
-							// między okienkami skaczesz ctrl+w i strzałki, albo ctrl+ww
-							// okienko zamyka się :q
-							// ZOB. regułę tags: w Makefile (naciśnij gf gdy kursor jest na nazwie pliku)
+					changeState( InWant );
 					free(pkt);
 					free(tmpPacket);
-				} // a skoro już jesteśmy przy komendach vi, najedź kursorem na } i wciśnij %  (niestety głupieje przy komentarzach :( )
+				}
 				debug("Skończyłem myśleć");
 			break;
 		}
 	    case InWant:
 		{
 			println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
-			// tutaj zapewne jakiś muteks albo zmienna warunkowa
-			// bo aktywne czekanie jest BUE
 			pthread_mutex_lock(&wantMut);
 			while (ackCount != size - 1 && !hotel->isCandidate(rank, hotelCapacity, processType)){
-				//std::cout << hotel->isCandidate(rank, hotelCapacity, processType) <<std::endl;
 				println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
 				pthread_cond_wait(&cond, &wantMut);	
 			}
 			pthread_mutex_unlock(&wantMut);
 			changeState(InSection);
-			// // sectionQueue.isCandidate(rank, hotelCapacity, processType)
-			// println("wchodze do sekcji krytycznej do hotelu %d, dostałem ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
-			
-			// if ( ackCount == size - 1 &&  
-			// hotel->isCandidate(rank, hotelCapacity, processType)
-			// // sectionQueue.isCandidate(rank, hotelCapacity, processType)
-			// ){
-			// 	changeState(InSection);
-			// }
 			break;
 		}
 	    case InSection:
 		{
-			// tutaj zapewne jakiś muteks albo zmienna warunkowa
-
-			// std::string sectionState = printVector(sekcja); 
-			println("Jestem w sekcji krytycznej(hotelu) %d", hotelChosen);
+			println("Jestem w hotelu %d (sekcji krytycznej)", hotelChosen);
 			if (processType == CLEANER) {
 				changeState(InSectionGuide);
 				break;
 			}
-			// std::cout<< sectionState<<std::endl;
 			ackGuides = 0;
-			//TODO: wysyłanie REQUEST z polem type=przewodnik do wszystkich i czeka na ackCount = N - P + push do guidesQueue
-
-
 			packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 1};
 			guidesQueue.push(*tmpPacket);
 			for (int i=0;i<=size-1;i++){
@@ -143,18 +113,14 @@ void mainLoop()
 		case InWantGuide:
 		{
 			println("Czekam na przewodnika.\n");
+			// Czekanie z zwrócenie conajmniej size - guides ACK 
 			pthread_mutex_lock(&wantMut);
 			while (ackGuides < size - guides && !guidesQueue.isOnFirstNthPlaces(rank, guides)){
-				//std::cout << hotel->isCandidate(rank, hotelCapacity, processType) <<std::endl;
-				println("Czekam na przewodnika hotelu %d, ack %d", hotelChosen, ackGuides);			
+				println("Czekam na przewodnika w hotelu %d, ack %d", hotelChosen, ackGuides);			
 				pthread_cond_wait(&cond, &wantMut);	
 			}
 			pthread_mutex_unlock(&wantMut);
 			changeState(InSectionGuide);
-			// println("Czekam na przewodnika.\n");
-			// if ( ackGuides >= size - guides &&  guidesQueue.isOnFirstNthPlaces(rank, guides)){
-			// 	changeState(InSectionGuide);
-			// }
 			break;
 		}
 		case InSectionGuide:
@@ -166,26 +132,26 @@ void mainLoop()
 				packet_t *pkt = new packet_t;
 				pkt->data = perc;
 				pkt->typeGuide = 1;
-				guidesQueue.removeBySrc(rank);
+				guidesQueue.removeBySrc(rank); // Usunięcie siebie z lokalnej kolejki do przewodników
 				for (int i=0;i<=size-1;i++)
 				if (i!=rank)
 				{
 					sendPacket( pkt, i, RELEASE);
 				}
 				free(pkt);
-				//TODO: wysyłanie RELEASE dla guidesQueue i removeBySrc siebie
 				debug("Perc: %d", perc);
 			}
 
 
-		    println("Wychodzę z sekcji krytycznej")
-			
+		    println("Wychodzę z hotelu %d(sekcji krytycznej)", hotelChosen);
+			hotel->setHotelState(processType);
 		    debug("Zmieniam stan na wysyłanie");
 		    packet_t *pkt_end = new packet_t;
 		    pkt_end->data = perc;
 			pkt_end->typeGuide = 0;
 			pkt_end->hotelIndex = hotelChosen;
-			hotel->removeBySrc(rank);
+			pkt_end->processType = processType2Int(processType);
+			hotel->removeBySrc(rank); // Usunięcie siebie z lokalnej kolejki(hotelu)
 		    for (int i=0;i<=size-1;i++)
 			if (i!=rank)
 			{

@@ -1,15 +1,11 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
-!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
 !_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
-!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
-!_TAG_PROC_CWD	/home/miko/Documents/proz/projekt/PUT-PrzetwarzanieRozproszone/	//
 !_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	5.9.0	//
-1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s	chapter:Obrażalscy kosmici
+!_TAG_PROGRAM_VERSION	0.0.0	//
+1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s
 ACK	util.h	/^#define ACK /;"	d
 APP_PKT	util.h	/^#define APP_PKT /;"	d
 BLUE	util.h	/^#define BLUE /;"	d
@@ -82,6 +78,7 @@ guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v	typeref:typename:Process
 hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v	typeref:typename:int
 hotelIndex	util.h	/^    int hotelIndex;  \/* indeks hotelu, którego dotyczy pakiet*\/$/;"	m	struct:__anon213916590108	typeref:typename:int
 hotelNumber	util.h	/^#define hotelNumber /;"	d
+hotelState	queue.h	/^    std::string hotelState = CLEANER;$/;"	m	class:ProcessQueue	typeref:typename:std::string
 inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f	typeref:typename:void
 isAvailable	queue.cpp	/^bool ProcessQueue::isAvailable(packet_t& packet) {$/;"	f	class:ProcessQueue	typeref:typename:bool
 isCandidate	queue.cpp	/^bool ProcessQueue::isCandidate(int rank, int n, std::string processType){$/;"	f	class:ProcessQueue	typeref:typename:bool
@@ -120,6 +117,7 @@ sectionQueue	queue.cpp	/^ProcessQueue sectionQueue;/;"	v	typeref:typename:Proces
 sectionQueue	queue/queue.cpp	/^ProcessQueue sectionQueue;/;"	v	typeref:typename:ProcessQueue
 sekcja	watek_glowny.cpp	/^std::vector<int> sekcja;$/;"	v	typeref:typename:std::vector<int>
 sendPacket	util.cpp	/^void sendPacket(packet_t *pkt, int destination, int tag)$/;"	f	typeref:typename:void
+setHotelState	queue.cpp	/^ void ProcessQueue::setHotelState(std::string newHotelState){$/;"	f	class:ProcessQueue	typeref:typename:void
 showQueue	queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue	typeref:typename:void
 showQueue	queue/queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue	typeref:typename:void
 size	main.cpp	/^int rank, size;$/;"	v	typeref:typename:int

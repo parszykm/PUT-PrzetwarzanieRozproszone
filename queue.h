@@ -17,6 +17,8 @@ public:
     void removeBySrc(int src);
     bool isOnFirstNthPlaces(int rank, int n);
     int getQueueSize();
+    std::string hotelState = CLEANER;
+    void setHotelState(std::string newHotelState);
     
 
 

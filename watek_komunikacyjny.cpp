@@ -21,8 +21,6 @@ void *startKomWatek(void *ptr)
         switch ( status.MPI_TAG ) {
 	    case REQUEST: 
         {
-                // println("Czy REQUEST dotyczy guida %d", pakiet.typeGuide);
-                //TODO: jeżeli type=przewodnik to push do guidesQueue
                 packet_t *tmpPacket = new packet_t;
                 if (pakiet.typeGuide == 1) {
                     guidesQueue.push(pakiet);
@@ -30,8 +28,6 @@ void *startKomWatek(void *ptr)
                     sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
                     
                 } else {
-                    // println("Ktoś coś prosi. A niech ma!")
-                    // println("Request przyszedl od %d", pakiet.src);
                     auto it = sectionQueues.begin();
                     while(it != sectionQueues.end()){
                         if(it - sectionQueues.begin() == pakiet.hotelIndex){
@@ -40,7 +36,6 @@ void *startKomWatek(void *ptr)
                         }
                         ++it;
                     }                
-                    // sectionQueue.push(pakiet);
                     debug("Ktoś coś prosi. A niech ma!")
                     tmpPacket->typeGuide = 0;
                     sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
@@ -50,21 +45,15 @@ void *startKomWatek(void *ptr)
         }
 	    case ACK: 
         {
-                //TODO: jeżeli type=przewodnik 
-                //println("Czy pakiet dotyczy guida %d", pakiet.typeGuide);
                 if (pakiet.typeGuide == 1) {
-                    //ackGuides++;
                     pthread_mutex_lock(&wantMut);
                     ackGuides++;
                     if(ackGuides == size - guides){
                         pthread_mutex_unlock(&wantMut);
                         pthread_cond_signal(&cond);
                     } else {pthread_mutex_unlock(&wantMut);} 
-                    // println("stan ack guides %d dla procesu %d\n", ackGuides, rank);
                 } else {
                     debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                    // println("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-	                //ackCount++;
                     pthread_mutex_lock(&wantMut);
                     ackCount++;
                     if(ackCount == size - 1){
@@ -72,12 +61,11 @@ void *startKomWatek(void *ptr)
                         pthread_cond_signal(&cond);
                     } else {pthread_mutex_unlock(&wantMut);} 
                 }
-                /* czy potrzeba tutaj muteksa? Będzie wyścig, czy nie będzie? Zastanówcie się. */
+
             break;
         }
         case RELEASE:
         {
-             //TODO: jeżeli type=przewodnik removeBySrc do guidesQueue
             if (pakiet.typeGuide == 1) {
                 guidesQueue.removeBySrc(pakiet.src);
             } else {
@@ -85,14 +73,14 @@ void *startKomWatek(void *ptr)
                 while(it != sectionQueues.end()){
                     if(it - sectionQueues.begin() == pakiet.hotelIndex){
                         it->removeBySrc(pakiet.src);
+                        it->setHotelState(Int2ProcessType(pakiet.processType));
                         break;
                     }
                     ++it;
                 }  
-                // sectionQueue.removeBySrc(pakiet.src); //Usuwanie procesu z kolejki
             }
-            // println("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
-            // printf("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
+            debug("DOSTALEM RELEASE OD %d", status.MPI_SOURCE);
+            debug("USUWAM proces %d z kolejki %d\n", pakiet.src, rank);
             break;
         }
 	    default:
