@@ -17,6 +17,17 @@
 #define STATE_CHANGE_PROB 10
 
 #define ROOT 0
+#define BLUE_PERCENTAGE 0.4
+#define PURPLE_PERCENTAGE 0.4
+#define CLEANER_PERCENTAGE 0.2
+#define BLUE "niebieski"
+#define PURPLE "fioletowy"
+#define CLEANER "sprzątacz"
+#define BLUE_INT 0
+#define PURPLE_INT 1
+#define CLEANER_INT 2
+#define hotelNumber 5
+extern int colorCode;
 
 /* tutaj TYLKO zapowiedzi - definicje w main.c */
 extern int rank;
@@ -28,6 +39,7 @@ extern int hotelCapacity;
 extern int guides;
 extern std::string processType;
 extern pthread_t threadKom;
+
 
 
 

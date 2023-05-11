@@ -28,6 +28,6 @@ private:
 };
 
 
-extern std::vector<ProcessQueue> sectionQueues;
+extern std::vector<ProcessQueue> hotels;
 extern ProcessQueue guidesQueue;
 extern ProcessQueue sectionQueue;

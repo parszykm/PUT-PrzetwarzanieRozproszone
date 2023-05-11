@@ -30,6 +30,7 @@ extern int clockVar;
 #define APP_PKT 4
 #define FINISH  5
 
+#define ROOT 0
 #define BLUE_PERCENTAGE 0.4
 #define PURPLE_PERCENTAGE 0.4
 #define CLEANER_PERCENTAGE 0.2

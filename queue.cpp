@@ -36,8 +36,6 @@ void ProcessQueue::showQueue(){
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     for (const auto& packet : *m_packets) {
         std::cout << "ts: " << packet.ts << ", src: " << packet.src << ", data: " << packet.data << ", kolor: "<<Int2ProcessType(static_cast<int>(packet.processType))<< std::endl;
-        // queueState += "ts: " + std::to_string(packet.ts) + ", src: " + std::to_string(packet.src) + ", data: " + std::to_string(packet.data) + ", type" + packet.processType + "\n";
-
     }
 }
 std::vector<packet_t> *ProcessQueue::getQueue(){
@@ -93,6 +91,5 @@ void ProcessQueue::removeBySrc(int src) {
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     this->hotelState = newHotelState;
  }
-std::vector<ProcessQueue> sectionQueues(hotelNumber);
+std::vector<ProcessQueue> hotels(hotelNumber);
 ProcessQueue guidesQueue;
-ProcessQueue sectionQueue;

@@ -23,14 +23,14 @@ void *startKomWatek(void *ptr)
         {
                 packet_t *tmpPacket = new packet_t;
                 if (pakiet.typeGuide == 1) {
-                    guidesQueue.push(pakiet);
+                    guidesQueue.push(pakiet); // Dodanie proszącego procesu do kolejki do przewodników
                     tmpPacket->typeGuide = 1;
                     sendPacket(tmpPacket, status.MPI_SOURCE, ACK ); 
                     
                 } else {
-                    auto it = sectionQueues.begin();
-                    while(it != sectionQueues.end()){
-                        if(it - sectionQueues.begin() == pakiet.hotelIndex){
+                    auto it = hotels.begin();
+                    while(it != hotels.end()){
+                        if(it - hotels.begin() == pakiet.hotelIndex){
                             it->push(pakiet);
                             break;
                         }
@@ -67,12 +67,12 @@ void *startKomWatek(void *ptr)
         case RELEASE:
         {
             if (pakiet.typeGuide == 1) {
-                guidesQueue.removeBySrc(pakiet.src);
+                guidesQueue.removeBySrc(pakiet.src); // Usunięcie wychodzącego procesu do kolejki do przewodników
             } else {
-                auto it = sectionQueues.begin();
-                while(it != sectionQueues.end()){
-                    if(it - sectionQueues.begin() == pakiet.hotelIndex){
-                        it->removeBySrc(pakiet.src);
+                auto it = hotels.begin();
+                while(it != hotels.end()){
+                    if(it - hotels.begin() == pakiet.hotelIndex){
+                        it->removeBySrc(pakiet.src); // Usunięcie wychodzącego procesu z kolejki hotelu
                         it->setHotelState(Int2ProcessType(pakiet.processType));
                         break;
                     }

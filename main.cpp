@@ -19,6 +19,7 @@ int cleanerCount = size - blueCount - purpleCount;
 std::string processType;
 int hotelCapacity = 3;
 int guides = 5;
+
 /* 
  * Każdy proces ma dwa wątki - główny i komunikacyjny
  * w plikach, odpowiednio, watek_glowny.c oraz (siurpryza) watek_komunikacyjny.c
@@ -53,7 +54,6 @@ void check_thread_support(int provided)
             printf("tylko te wątki, ktore wykonaly mpi_init_thread mogą wykonać wołania do biblioteki mpi\n");
 	    break;
         case MPI_THREAD_SERIALIZED: 
-            /* Potrzebne zamki wokół wywołań biblioteki MPI */
             printf("tylko jeden watek naraz może wykonać wołania do biblioteki MPI\n");
 	    break;
         case MPI_THREAD_MULTIPLE: printf("Pełne wsparcie dla wątków\n"); /* tego chcemy. Wszystkie inne powodują problemy */
@@ -70,26 +70,13 @@ int main(int argc, char **argv)
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provided);
     check_thread_support(provided);
     srand(rank);
-    /* zob. util.c oraz util.h */
     inicjuj_typ_pakietu(); // tworzy typ pakietu
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     processType = generateTypeForProcess(rank, size);
     colorCode = generateColorCode(processType);
-    /* startKomWatek w watek_komunikacyjny.c 
-     * w vi najedź kursorem na nazwę pliku i wciśnij klawisze gf
-     * powrót po wciśnięciu ctrl+6
-     * */
     pthread_create( &threadKom, NULL, startKomWatek , 0);
-
-    /* mainLoop w watek_glowny.c 
-     * w vi najedź kursorem na nazwę pliku i wciśnij klawisze gf
-     * powrót po wciśnięciu ctrl+6
-     * */
-    mainLoop(); // możesz także wcisnąć ctrl-] na nazwie funkcji
-		// działa, bo używamy ctags (zob Makefile)
-		// jak nie działa, wpisz set tags=./tags :)
-    
+    mainLoop(); 
     finalizuj();
     return 0;
 }

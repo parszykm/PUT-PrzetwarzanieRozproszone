@@ -36,31 +36,31 @@ void mainLoop()
 					pkt->processType = processType2Int(processType);
 					leastLoaded = size + 1;
 					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
-					auto it = sectionQueues.begin();
+					auto it = hotels.begin();
 					if(processType == CLEANER){
 						
 						randomHotelIndex = ( std::rand() % ( hotelNumber + 1 ) ) - 1;
 						println("Wybrałem indeks hotelu %d do sprzątnięcia", randomHotelIndex);
-						while(it != sectionQueues.end() && (int)(it - sectionQueues.begin()) != randomHotelIndex){
+						while(it != hotels.end() && (int)(it - hotels.begin()) != randomHotelIndex){
 							++it;
 						}
-						tmpPacket->hotelIndex = it - sectionQueues.begin();
+						tmpPacket->hotelIndex = it - hotels.begin();
 						it->push(*tmpPacket);
-						pkt->hotelIndex = it - sectionQueues.begin();
-						hotelChosen = (int)(it - sectionQueues.begin());
+						pkt->hotelIndex = it - hotels.begin();
+						hotelChosen = (int)(it - hotels.begin());
 						hotel = &(*it);
 						println("Wybrałem hotel %d", hotelChosen);	
 					}
 					else{
 						// Przeszukiwanie hotelu, który jest dostępny dla danej fakcji i ma najmniejsze wypełnienie
-						while(it != sectionQueues.end()){
-							debug("Sprawdzam hotel %ld",it - sectionQueues.begin());
+						while(it != hotels.end()){
+							debug("Sprawdzam hotel %ld",it - hotels.begin());
 							if(it->isAvailable(*tmpPacket) && it->getQueueSize() < leastLoaded){
 									leastLoaded = it->getQueueSize();
-									tmpPacket->hotelIndex = it - sectionQueues.begin();
+									tmpPacket->hotelIndex = it - hotels.begin();
 									it->push(*tmpPacket);
-									pkt->hotelIndex = it - sectionQueues.begin();
-									hotelChosen = (int)(it - sectionQueues.begin());
+									pkt->hotelIndex = it - hotels.begin();
+									hotelChosen = (int)(it - hotels.begin());
 									hotel = &(*it);
 							}
 							++it;
@@ -102,7 +102,7 @@ void mainLoop()
 			}
 			ackGuides = 0;
 			packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 1};
-			guidesQueue.push(*tmpPacket);
+			guidesQueue.push(*tmpPacket); // Dodanie siebie do lokalnej kolejki do przewodników
 			for (int i=0;i<=size-1;i++){
 				if (i!=rank) sendPacket( tmpPacket, i, REQUEST);
 			}

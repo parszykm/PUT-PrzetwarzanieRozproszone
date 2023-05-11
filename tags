@@ -8,11 +8,17 @@
 1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s
 ACK	util.h	/^#define ACK /;"	d
 APP_PKT	util.h	/^#define APP_PKT /;"	d
+BLUE	main.h	/^#define BLUE /;"	d
 BLUE	util.h	/^#define BLUE /;"	d
+BLUE_INT	main.h	/^#define BLUE_INT /;"	d
 BLUE_INT	util.h	/^#define BLUE_INT /;"	d
+BLUE_PERCENTAGE	main.h	/^#define BLUE_PERCENTAGE /;"	d
 BLUE_PERCENTAGE	util.h	/^#define BLUE_PERCENTAGE /;"	d
+CLEANER	main.h	/^#define CLEANER /;"	d
 CLEANER	util.h	/^#define CLEANER /;"	d
+CLEANER_INT	main.h	/^#define CLEANER_INT /;"	d
 CLEANER_INT	util.h	/^#define CLEANER_INT /;"	d
+CLEANER_PERCENTAGE	main.h	/^#define CLEANER_PERCENTAGE /;"	d
 CLEANER_PERCENTAGE	util.h	/^#define CLEANER_PERCENTAGE /;"	d
 FALSE	main.h	/^#define FALSE /;"	d
 FINISH	util.h	/^#define FINISH /;"	d
@@ -30,14 +36,18 @@ MAINH	main.h	/^#define MAINH$/;"	d
 MPI_PAKIET_T	util.cpp	/^MPI_Datatype MPI_PAKIET_T;$/;"	v	typeref:typename:MPI_Datatype
 NITEMS	util.h	/^#define NITEMS /;"	d
 Obrażalscy kosmici	README.md	/^# Obrażalscy kosmici$/;"	c
+PURPLE	main.h	/^#define PURPLE /;"	d
 PURPLE	util.h	/^#define PURPLE /;"	d
+PURPLE_INT	main.h	/^#define PURPLE_INT /;"	d
 PURPLE_INT	util.h	/^#define PURPLE_INT /;"	d
+PURPLE_PERCENTAGE	main.h	/^#define PURPLE_PERCENTAGE /;"	d
 PURPLE_PERCENTAGE	util.h	/^#define PURPLE_PERCENTAGE /;"	d
 ProcessQueue	queue.h	/^class ProcessQueue {$/;"	c
 ProcessQueue	queue/queue.h	/^class ProcessQueue {$/;"	c
 RELEASE	util.h	/^#define RELEASE /;"	d
 REQUEST	util.h	/^#define REQUEST /;"	d
 ROOT	main.h	/^#define ROOT /;"	d
+ROOT	util.h	/^#define ROOT /;"	d
 SEC_IN_STATE	main.h	/^#define SEC_IN_STATE /;"	d
 SOURCES	Makefile	/^SOURCES=$(wildcard *.cpp)$/;"	m
 STATE_CHANGE_PROB	main.h	/^#define STATE_CHANGE_PROB /;"	d
@@ -77,6 +87,7 @@ guides	main.cpp	/^int guides = 5;$/;"	v	typeref:typename:int
 guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v	typeref:typename:ProcessQueue
 hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v	typeref:typename:int
 hotelIndex	util.h	/^    int hotelIndex;  \/* indeks hotelu, którego dotyczy pakiet*\/$/;"	m	struct:__anon213916590108	typeref:typename:int
+hotelNumber	main.h	/^#define hotelNumber /;"	d
 hotelNumber	util.h	/^#define hotelNumber /;"	d
 hotelState	queue.h	/^    std::string hotelState = CLEANER;$/;"	m	class:ProcessQueue	typeref:typename:std::string
 inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f	typeref:typename:void
@@ -113,7 +124,6 @@ removeElement	util.cpp	/^void removeElement(std::vector<int>& v, int elem) {$/;"
 run	Makefile	/^run: main Makefile tags$/;"	t
 run-big	Makefile	/^run-big: main Makefile tags$/;"	t
 run-debug	Makefile	/^run-debug: main Makefile tags$/;"	t
-sectionQueue	queue.cpp	/^ProcessQueue sectionQueue;/;"	v	typeref:typename:ProcessQueue
 sectionQueue	queue/queue.cpp	/^ProcessQueue sectionQueue;/;"	v	typeref:typename:ProcessQueue
 sekcja	watek_glowny.cpp	/^std::vector<int> sekcja;$/;"	v	typeref:typename:std::vector<int>
 sendPacket	util.cpp	/^void sendPacket(packet_t *pkt, int destination, int tag)$/;"	f	typeref:typename:void
