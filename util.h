@@ -40,7 +40,7 @@ extern int clockVar;
 #define BLUE_INT 0
 #define PURPLE_INT 1
 #define CLEANER_INT 2
-#define hotelNumber 5
+#define hotelNumber 1
 extern int colorCode;
 
 extern MPI_Datatype MPI_PAKIET_T;

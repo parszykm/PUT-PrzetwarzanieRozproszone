@@ -14,6 +14,16 @@ void ProcessQueue::push(packet_t& packet) {
 bool ProcessQueue::isAvailable(packet_t& packet) {
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
     //Walidacja czy od tyłu wektora nie ma procesu innego koloru
+    auto it = m_packets->begin();
+    if(packet.processType == CLEANER_INT)
+    {
+        while(it != m_packets->end()){
+            // std::cout<<packet.processType
+            if(it->processType == CLEANER_INT) return false;
+            ++it;
+        }
+
+    }
     if(this->hotelState == Int2ProcessType(colorEnemy(packet.processType))) return false; // jeżeli stan hotelu jest przeciwny do koloru procesu to odrzuć
     for (auto rit = m_packets->rbegin(); rit != m_packets->rend(); ++rit) {
         if(rit->processType == CLEANER_INT && rit->ts < packet.ts) break;
@@ -48,8 +58,14 @@ int ProcessQueue::getQueueSize(){
 
 }
 bool ProcessQueue::isCandidate(int rank, int n, std::string processType){
+    // std::cout<<processType<<" "<<CLEANER<<(*m_packets)[0].processType<<std::endl;
     std::lock_guard<std::mutex> lock(m_mutex); // blokowanie mutexa przy pomocy std::lock_guard
-    if( processType != CLEANER && (*m_packets)[0].processType == CLEANER_INT) return false; // sprzątacz jest na 1 - miejscu blokuje inne procesy
+    if( processType != CLEANER && (*m_packets)[0].processType == CLEANER_INT) { return false; } // sprzątacz jest na 1 - miejscu blokuje inne procesy
+    else if(processType == CLEANER && (*m_packets)[0].processType == CLEANER_INT) {return true; }
+    else if(processType == CLEANER) {return false; }
+    // else{
+    //     std::cout<<processType<<std::endl;
+    // }
     auto it = m_packets->begin();
     int index = 0;
     while(it != m_packets->end() && index < n){  

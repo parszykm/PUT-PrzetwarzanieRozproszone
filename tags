@@ -1,151 +1,125 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
-!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
-!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
-!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	//
-1. Opis problemu:	README.md	/^## 1. Opis problemu:$/;"	s
-ACK	util.h	/^#define ACK /;"	d
-APP_PKT	util.h	/^#define APP_PKT /;"	d
-BLUE	main.h	/^#define BLUE /;"	d
-BLUE	util.h	/^#define BLUE /;"	d
-BLUE_INT	main.h	/^#define BLUE_INT /;"	d
-BLUE_INT	util.h	/^#define BLUE_INT /;"	d
-BLUE_PERCENTAGE	main.h	/^#define BLUE_PERCENTAGE /;"	d
-BLUE_PERCENTAGE	util.h	/^#define BLUE_PERCENTAGE /;"	d
-CLEANER	main.h	/^#define CLEANER /;"	d
-CLEANER	util.h	/^#define CLEANER /;"	d
-CLEANER_INT	main.h	/^#define CLEANER_INT /;"	d
-CLEANER_INT	util.h	/^#define CLEANER_INT /;"	d
-CLEANER_PERCENTAGE	main.h	/^#define CLEANER_PERCENTAGE /;"	d
-CLEANER_PERCENTAGE	util.h	/^#define CLEANER_PERCENTAGE /;"	d
-FALSE	main.h	/^#define FALSE /;"	d
-FINISH	util.h	/^#define FINISH /;"	d
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+ACK	util.h	27;"	d
+APP_PKT	util.h	30;"	d
+BLUE	util.h	37;"	d
+BLUE_INT	util.h	40;"	d
+BLUE_PERCENTAGE	util.h	34;"	d
+CLEANER	util.h	39;"	d
+CLEANER_INT	util.h	42;"	d
+CLEANER_PERCENTAGE	util.h	36;"	d
+FALSE	main.h	15;"	d
+FINISH	util.h	31;"	d
 FLAGS	Makefile	/^FLAGS=-g$/;"	m
 HEADERS	Makefile	/^HEADERS=$(SOURCES:.cpp=.h)$/;"	m
-InFinish	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InMonitor	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InRun	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InSection	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InSectionGuide	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InWant	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-InWantGuide	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	e	enum:__anon213916590203
-Int2ProcessType	util.cpp	/^extern std::string Int2ProcessType(int processType){$/;"	f	typeref:typename:std::string
-MAINH	main.h	/^#define MAINH$/;"	d
-MPI_PAKIET_T	util.cpp	/^MPI_Datatype MPI_PAKIET_T;$/;"	v	typeref:typename:MPI_Datatype
-NITEMS	util.h	/^#define NITEMS /;"	d
-Obrażalscy kosmici	README.md	/^# Obrażalscy kosmici$/;"	c
-PURPLE	main.h	/^#define PURPLE /;"	d
-PURPLE	util.h	/^#define PURPLE /;"	d
-PURPLE_INT	main.h	/^#define PURPLE_INT /;"	d
-PURPLE_INT	util.h	/^#define PURPLE_INT /;"	d
-PURPLE_PERCENTAGE	main.h	/^#define PURPLE_PERCENTAGE /;"	d
-PURPLE_PERCENTAGE	util.h	/^#define PURPLE_PERCENTAGE /;"	d
+InFinish	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InMonitor	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InRun	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InSection	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InSectionGuide	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InWant	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+InWantGuide	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	e	enum:__anon3
+Int2ProcessType	util.cpp	/^extern std::string Int2ProcessType(int processType){$/;"	f
+MAINH	main.h	2;"	d
+MPI_PAKIET_T	util.cpp	/^MPI_Datatype MPI_PAKIET_T;$/;"	v
+NITEMS	util.h	23;"	d
+PURPLE	util.h	38;"	d
+PURPLE_INT	util.h	41;"	d
+PURPLE_PERCENTAGE	util.h	35;"	d
 ProcessQueue	queue.h	/^class ProcessQueue {$/;"	c
 ProcessQueue	queue/queue.h	/^class ProcessQueue {$/;"	c
-RELEASE	util.h	/^#define RELEASE /;"	d
-REQUEST	util.h	/^#define REQUEST /;"	d
-ROOT	main.h	/^#define ROOT /;"	d
-ROOT	util.h	/^#define ROOT /;"	d
-SEC_IN_STATE	main.h	/^#define SEC_IN_STATE /;"	d
+RELEASE	util.h	29;"	d
+REQUEST	util.h	28;"	d
+ROOT	util.h	33;"	d
+SEC_IN_STATE	main.h	16;"	d
 SOURCES	Makefile	/^SOURCES=$(wildcard *.cpp)$/;"	m
-STATE_CHANGE_PROB	main.h	/^#define STATE_CHANGE_PROB /;"	d
-TRUE	main.h	/^#define TRUE /;"	d
-UTILH	util.h	/^#define UTILH$/;"	d
-WATEK_GLOWNY_H	watek_glowny.h	/^#define WATEK_GLOWNY_H$/;"	d
-WATEK_KOMUNIKACYJNY_H	watek_komunikacyjny.h	/^#define WATEK_KOMUNIKACYJNY_H$/;"	d
-__anon213916590108	util.h	/^typedef struct {$/;"	s
-__anon213916590203	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	g
-__anona72bde6f0102	queue/queue.cpp	/^        [src](const packet_t& packet) { return packet.src == src; }), m_packets->end());$/;"	f	function:ProcessQueue::removeBySrc	file:
-__anonb3849fd40108	queue/queue.h	/^typedef struct {$/;"	s
-__anonce04d8fb0102	queue.cpp	/^        [src](const packet_t& packet) { return packet.src == src; }), m_packets->end());$/;"	f	function:ProcessQueue::removeBySrc	file:
-ackCount	main.cpp	/^int ackCount = 0;$/;"	v	typeref:typename:int
-ackGuides	main.cpp	/^int ackGuides = 0;$/;"	v	typeref:typename:int
-all	Makefile	/^all: main tags$/;"	t
-blueCount	main.cpp	/^int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);$/;"	v	typeref:typename:int
-changeState	util.cpp	/^void changeState( state_t newState )$/;"	f	typeref:typename:void
-check_thread_support	main.cpp	/^void check_thread_support(int provided)$/;"	f	typeref:typename:void
-clean	Makefile	/^clean:$/;"	t
-cleanerCount	main.cpp	/^int cleanerCount = size - blueCount - purpleCount;$/;"	v	typeref:typename:int
-clear	Makefile	/^clear: clean$/;"	t
-clockMut	util.cpp	/^pthread_mutex_t clockMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
-clockVar	util.cpp	/^int clockVar = 0;$/;"	v	typeref:typename:int
-colorCode	util.cpp	/^int colorCode;/;"	v	typeref:typename:int
-colorEnemy	util.cpp	/^int colorEnemy(int colorInt){$/;"	f	typeref:typename:int
-cond	util.cpp	/^pthread_cond_t cond = PTHREAD_COND_INITIALIZER;$/;"	v	typeref:typename:pthread_cond_t
-data	queue/queue.h	/^    int data;$/;"	m	struct:__anonb3849fd40108	typeref:typename:int
-data	util.h	/^    int data;     \/* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą /;"	m	struct:__anon213916590108	typeref:typename:int
-debug	main.h	/^#define debug(/;"	d
-finalizuj	main.cpp	/^void finalizuj()$/;"	f	typeref:typename:void
-generateColorCode	util.cpp	/^int generateColorCode(std::string processType){$/;"	f	typeref:typename:int
-generateTypeForProcess	util.cpp	/^std::string generateTypeForProcess(int rank, int size){$/;"	f	typeref:typename:std::string
-getQueue	queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
-getQueue	queue/queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
-getQueueSize	queue.cpp	/^int ProcessQueue::getQueueSize(){$/;"	f	class:ProcessQueue	typeref:typename:int
-guides	main.cpp	/^int guides = 5;$/;"	v	typeref:typename:int
-guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v	typeref:typename:ProcessQueue
-hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v	typeref:typename:int
-hotelIndex	util.h	/^    int hotelIndex;  \/* indeks hotelu, którego dotyczy pakiet*\/$/;"	m	struct:__anon213916590108	typeref:typename:int
-hotelNumber	main.h	/^#define hotelNumber /;"	d
-hotelNumber	util.h	/^#define hotelNumber /;"	d
-hotelState	queue.h	/^    std::string hotelState = CLEANER;$/;"	m	class:ProcessQueue	typeref:typename:std::string
-inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f	typeref:typename:void
-isAvailable	queue.cpp	/^bool ProcessQueue::isAvailable(packet_t& packet) {$/;"	f	class:ProcessQueue	typeref:typename:bool
-isCandidate	queue.cpp	/^bool ProcessQueue::isCandidate(int rank, int n, std::string processType){$/;"	f	class:ProcessQueue	typeref:typename:bool
-isCandidate	queue/queue.cpp	/^bool ProcessQueue::isCandidate(int rank, int n){$/;"	f	class:ProcessQueue	typeref:typename:bool
-isOnFirstNthPlaces	queue.cpp	/^bool ProcessQueue::isOnFirstNthPlaces(int rank, int n){$/;"	f	class:ProcessQueue	typeref:typename:bool
-m_mutex	queue.h	/^    std::mutex m_mutex;$/;"	m	class:ProcessQueue	typeref:typename:std::mutex
-m_mutex	queue/queue.h	/^    std::mutex m_mutex;$/;"	m	class:ProcessQueue	typeref:typename:std::mutex
-m_packets	queue.h	/^    std::vector<packet_t> *m_packets = new std::vector<packet_t>;$/;"	m	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
-m_packets	queue/queue.h	/^    std::vector<packet_t> *m_packets = new std::vector<packet_t>;$/;"	m	class:ProcessQueue	typeref:typename:std::vector<packet_t> *
-main	Makefile	/^main: $(SOURCES) $(HEADERS) Makefile$/;"	t
-main	main.cpp	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
-main	queue/queue_test.cpp	/^int main(){$/;"	f	typeref:typename:int
-mainLoop	watek_glowny.cpp	/^void mainLoop()$/;"	f	typeref:typename:void
-name	util.cpp	/^    const char *name;$/;"	m	struct:tagNames_t	typeref:typename:const char *	file:
-packet_t	queue/queue.h	/^} packet_t;$/;"	t	typeref:struct:__anonb3849fd40108
-packet_t	util.h	/^} packet_t;$/;"	t	typeref:struct:__anon213916590108
-pop	queue.cpp	/^void ProcessQueue::pop() {$/;"	f	class:ProcessQueue	typeref:typename:void
-pop	queue/queue.cpp	/^void ProcessQueue::pop() {$/;"	f	class:ProcessQueue	typeref:typename:void
-printVector	util.cpp	/^std::string printVector(const std::vector<int>& v) {$/;"	f	typeref:typename:std::string
-println	main.h	/^#define println(/;"	d
-processType	main.cpp	/^std::string processType;$/;"	v	typeref:typename:std::string
-processType	util.h	/^    int processType; \/* typ procesu = {0 - niebieski, 1 - fioletowy, 2 - sprzątacz}*\/$/;"	m	struct:__anon213916590108	typeref:typename:int
-processType2Int	util.cpp	/^extern int processType2Int(std::string processType){$/;"	f	typeref:typename:int
-purpleCount	main.cpp	/^int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);$/;"	v	typeref:typename:int
-push	queue.cpp	/^void ProcessQueue::push(packet_t& packet) {$/;"	f	class:ProcessQueue	typeref:typename:void
-push	queue/queue.cpp	/^void ProcessQueue::push(const packet_t& packet) {$/;"	f	class:ProcessQueue	typeref:typename:void
-queueMut	util.cpp	/^pthread_mutex_t queueMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
-rank	main.cpp	/^int rank, size;$/;"	v	typeref:typename:int
-removeBySrc	queue.cpp	/^void ProcessQueue::removeBySrc(int src) {$/;"	f	class:ProcessQueue	typeref:typename:void
-removeBySrc	queue/queue.cpp	/^void ProcessQueue::removeBySrc(int src) {$/;"	f	class:ProcessQueue	typeref:typename:void
-removeElement	util.cpp	/^void removeElement(std::vector<int>& v, int elem) {$/;"	f	typeref:typename:void
-run	Makefile	/^run: main Makefile tags$/;"	t
-run-big	Makefile	/^run-big: main Makefile tags$/;"	t
-run-debug	Makefile	/^run-debug: main Makefile tags$/;"	t
-sectionQueue	queue/queue.cpp	/^ProcessQueue sectionQueue;/;"	v	typeref:typename:ProcessQueue
-sekcja	watek_glowny.cpp	/^std::vector<int> sekcja;$/;"	v	typeref:typename:std::vector<int>
-sendPacket	util.cpp	/^void sendPacket(packet_t *pkt, int destination, int tag)$/;"	f	typeref:typename:void
-setHotelState	queue.cpp	/^ void ProcessQueue::setHotelState(std::string newHotelState){$/;"	f	class:ProcessQueue	typeref:typename:void
-showQueue	queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue	typeref:typename:void
-showQueue	queue/queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue	typeref:typename:void
-size	main.cpp	/^int rank, size;$/;"	v	typeref:typename:int
-src	queue/queue.h	/^    int src;$/;"	m	struct:__anonb3849fd40108	typeref:typename:int
-src	util.h	/^    int src;  $/;"	m	struct:__anon213916590108	typeref:typename:int
-stan	util.cpp	/^state_t stan=InRun;$/;"	v	typeref:typename:state_t
-startKomWatek	watek_komunikacyjny.cpp	/^void *startKomWatek(void *ptr)$/;"	f	typeref:typename:void *
-stateMut	util.cpp	/^pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
-state_t	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_/;"	t	typeref:enum:__anon213916590203
-tag	util.cpp	/^    int tag;$/;"	m	struct:tagNames_t	typeref:typename:int	file:
-tag2string	util.cpp	/^const char *tag2string( int tag )$/;"	f	typeref:typename:const char *
-tagNames	util.cpp	/^} tagNames[] = { { "pakiet aplikacyjny", APP_PKT }, { "finish", FINISH}, $/;"	v	typeref:struct:tagNames_t[]
+STATE_CHANGE_PROB	main.h	17;"	d
+TRUE	main.h	14;"	d
+UTILH	util.h	2;"	d
+WATEK_GLOWNY_H	watek_glowny.h	2;"	d
+WATEK_KOMUNIKACYJNY_H	watek_komunikacyjny.h	2;"	d
+ackCount	main.cpp	/^int ackCount = 0;$/;"	v
+ackGuides	main.cpp	/^int ackGuides = 0;$/;"	v
+blueCount	main.cpp	/^int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);$/;"	v
+changeState	util.cpp	/^void changeState( state_t newState )$/;"	f
+check_thread_support	main.cpp	/^void check_thread_support(int provided)$/;"	f
+cleanerCount	main.cpp	/^int cleanerCount = size - blueCount - purpleCount;$/;"	v
+clockMut	util.cpp	/^pthread_mutex_t clockMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+clockVar	util.cpp	/^int clockVar = 0;$/;"	v
+colorCode	util.cpp	/^int colorCode;/;"	v
+colorEnemy	util.cpp	/^int colorEnemy(int colorInt){$/;"	f
+cond	util.cpp	/^pthread_cond_t cond = PTHREAD_COND_INITIALIZER;$/;"	v
+data	queue/queue.h	/^    int data;$/;"	m	struct:__anon1
+data	util.h	/^    int data;     \/* przykładowe pole z danymi; można zmienić nazwę na bardziej pasującą *\/$/;"	m	struct:__anon2
+debug	main.h	57;"	d
+debug	main.h	59;"	d
+finalizuj	main.cpp	/^void finalizuj()$/;"	f
+generateColorCode	util.cpp	/^int generateColorCode(std::string processType){$/;"	f
+generateTypeForProcess	util.cpp	/^std::string generateTypeForProcess(int rank, int size){$/;"	f
+getQueue	queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:std::ProcessQueue
+getQueue	queue/queue.cpp	/^std::vector<packet_t> *ProcessQueue::getQueue(){$/;"	f	class:std::ProcessQueue
+getQueueSize	queue.cpp	/^int ProcessQueue::getQueueSize(){$/;"	f	class:ProcessQueue
+guides	main.cpp	/^int guides = 2;$/;"	v
+guidesQueue	queue.cpp	/^ProcessQueue guidesQueue;$/;"	v
+hotelCapacity	main.cpp	/^int hotelCapacity = 3;$/;"	v
+hotelIndex	util.h	/^    int hotelIndex;  \/* indeks hotelu, którego dotyczy pakiet*\/$/;"	m	struct:__anon2
+hotelNumber	util.h	43;"	d
+hotelState	queue.h	/^    std::string hotelState = CLEANER;$/;"	m	class:ProcessQueue
+inicjuj_typ_pakietu	util.cpp	/^void inicjuj_typ_pakietu()$/;"	f
+isAvailable	queue.cpp	/^bool ProcessQueue::isAvailable(packet_t& packet) {$/;"	f	class:ProcessQueue
+isCandidate	queue.cpp	/^bool ProcessQueue::isCandidate(int rank, int n, std::string processType){$/;"	f	class:ProcessQueue
+isCandidate	queue/queue.cpp	/^bool ProcessQueue::isCandidate(int rank, int n){$/;"	f	class:ProcessQueue
+isOnFirstNthPlaces	queue.cpp	/^bool ProcessQueue::isOnFirstNthPlaces(int rank, int n){$/;"	f	class:ProcessQueue
+m_mutex	queue.h	/^    std::mutex m_mutex;$/;"	m	class:ProcessQueue
+m_mutex	queue/queue.h	/^    std::mutex m_mutex;$/;"	m	class:ProcessQueue
+m_packets	queue.h	/^    std::vector<packet_t> *m_packets = new std::vector<packet_t>;$/;"	m	class:ProcessQueue::std
+m_packets	queue/queue.h	/^    std::vector<packet_t> *m_packets = new std::vector<packet_t>;$/;"	m	class:ProcessQueue::std
+main	main.cpp	/^int main(int argc, char **argv)$/;"	f
+main	queue/queue_test.cpp	/^int main(){$/;"	f
+mainLoop	watek_glowny.cpp	/^void mainLoop()$/;"	f
+name	util.cpp	/^    const char *name;$/;"	m	struct:tagNames_t	file:
+packet_t	queue/queue.h	/^} packet_t;$/;"	t	typeref:struct:__anon1
+packet_t	util.h	/^} packet_t;$/;"	t	typeref:struct:__anon2
+pop	queue.cpp	/^void ProcessQueue::pop() {$/;"	f	class:ProcessQueue
+pop	queue/queue.cpp	/^void ProcessQueue::pop() {$/;"	f	class:ProcessQueue
+printVector	util.cpp	/^std::string printVector(const std::vector<int>& v) {$/;"	f
+println	main.h	64;"	d
+processType	main.cpp	/^std::string processType;$/;"	v
+processType	util.h	/^    int processType; \/* typ procesu = {0 - niebieski, 1 - fioletowy, 2 - sprzątacz}*\/$/;"	m	struct:__anon2
+processType2Int	util.cpp	/^extern int processType2Int(std::string processType){$/;"	f
+purpleCount	main.cpp	/^int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTAGE);$/;"	v
+push	queue.cpp	/^void ProcessQueue::push(packet_t& packet) {$/;"	f	class:ProcessQueue
+push	queue/queue.cpp	/^void ProcessQueue::push(const packet_t& packet) {$/;"	f	class:ProcessQueue
+queueMut	util.cpp	/^pthread_mutex_t queueMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+rank	main.cpp	/^int rank, size;$/;"	v
+removeBySrc	queue.cpp	/^void ProcessQueue::removeBySrc(int src) {$/;"	f	class:ProcessQueue
+removeBySrc	queue/queue.cpp	/^void ProcessQueue::removeBySrc(int src) {$/;"	f	class:ProcessQueue
+removeElement	util.cpp	/^void removeElement(std::vector<int>& v, int elem) {$/;"	f
+sectionQueue	queue/queue.cpp	/^ProcessQueue sectionQueue;/;"	v
+sekcja	watek_glowny.cpp	/^std::vector<int> sekcja;$/;"	v
+sendPacket	util.cpp	/^void sendPacket(packet_t *pkt, int destination, int tag)$/;"	f
+setHotelState	queue.cpp	/^ void ProcessQueue::setHotelState(std::string newHotelState){$/;"	f	class:ProcessQueue
+showQueue	queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue
+showQueue	queue/queue.cpp	/^void ProcessQueue::showQueue(){$/;"	f	class:ProcessQueue
+size	main.cpp	/^int rank, size;$/;"	v
+src	queue/queue.h	/^    int src;$/;"	m	struct:__anon1
+src	util.h	/^    int src;  $/;"	m	struct:__anon2
+stan	util.cpp	/^state_t stan=InRun;$/;"	v
+startKomWatek	watek_komunikacyjny.cpp	/^void *startKomWatek(void *ptr)$/;"	f
+stateMut	util.cpp	/^pthread_mutex_t stateMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+state_t	util.h	/^typedef enum {InRun, InMonitor, InWant, InSection, InWantGuide, InSectionGuide, InFinish} state_t;$/;"	t	typeref:enum:__anon3
+tag	util.cpp	/^    int tag;$/;"	m	struct:tagNames_t	file:
+tag2string	util.cpp	/^const char *tag2string( int tag )$/;"	f
+tagNames	util.cpp	/^} tagNames[] = { { "pakiet aplikacyjny", APP_PKT }, { "finish", FINISH}, $/;"	v	typeref:struct:tagNames_t
 tagNames_t	util.cpp	/^struct tagNames_t{$/;"	s	file:
-tags	Makefile	/^tags: ${SOURCES} ${HEADERS}$/;"	t
-threadKom	main.cpp	/^pthread_t threadKom;$/;"	v	typeref:typename:pthread_t
-top	queue.cpp	/^packet_t ProcessQueue::top(){$/;"	f	class:ProcessQueue	typeref:typename:packet_t
-top	queue/queue.cpp	/^packet_t ProcessQueue::top(){$/;"	f	class:ProcessQueue	typeref:typename:packet_t
-ts	queue/queue.h	/^    int ts;$/;"	m	struct:__anonb3849fd40108	typeref:typename:int
-ts	util.h	/^    int ts;       \/* timestamp (zegar lamporta *\/$/;"	m	struct:__anon213916590108	typeref:typename:int
-typeGuide	util.h	/^    int typeGuide; \/*pole okreslajace czy ubiegamy sie o zasob jakim jest przewodnik *\/$/;"	m	struct:__anon213916590108	typeref:typename:int
-wantMut	util.cpp	/^pthread_mutex_t wantMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v	typeref:typename:pthread_mutex_t
+threadKom	main.cpp	/^pthread_t threadKom;$/;"	v
+top	queue.cpp	/^packet_t ProcessQueue::top(){$/;"	f	class:ProcessQueue
+top	queue/queue.cpp	/^packet_t ProcessQueue::top(){$/;"	f	class:ProcessQueue
+ts	queue/queue.h	/^    int ts;$/;"	m	struct:__anon1
+ts	util.h	/^    int ts;       \/* timestamp (zegar lamporta *\/$/;"	m	struct:__anon2
+typeGuide	util.h	/^    int typeGuide; \/*pole okreslajace czy ubiegamy sie o zasob jakim jest przewodnik *\/$/;"	m	struct:__anon2
+wantMut	util.cpp	/^pthread_mutex_t wantMut = PTHREAD_MUTEX_INITIALIZER;$/;"	v

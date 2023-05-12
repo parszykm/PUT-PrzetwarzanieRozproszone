@@ -46,20 +46,20 @@ void *startKomWatek(void *ptr)
 	    case ACK: 
         {
                 if (pakiet.typeGuide == 1) {
-                    pthread_mutex_lock(&wantMut);
+                   // pthread_mutex_lock(&wantMut);
                     ackGuides++;
-                    if(ackGuides == size - guides){
-                        pthread_mutex_unlock(&wantMut);
-                        pthread_cond_signal(&cond);
-                    } else {pthread_mutex_unlock(&wantMut);} 
+                    // if(ackGuides == size - guides){
+                    //     pthread_mutex_unlock(&wantMut);
+                    //     pthread_cond_signal(&cond);
+                    // } else {pthread_mutex_unlock(&wantMut);} 
                 } else {
                     debug("Dostałem ACK od %d, mam już %d.", status.MPI_SOURCE, ackCount);
-                    pthread_mutex_lock(&wantMut);
+                    // pthread_mutex_lock(&wantMut);
                     ackCount++;
-                    if(ackCount == size - 1){
-                        pthread_mutex_unlock(&wantMut);
-                        pthread_cond_signal(&cond);
-                    } else {pthread_mutex_unlock(&wantMut);} 
+                    // if(ackCount == size - 1){
+                    //     pthread_mutex_unlock(&wantMut);
+                    //     pthread_cond_signal(&cond);
+                    // } else {pthread_mutex_unlock(&wantMut);} 
                 }
 
             break;

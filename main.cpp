@@ -18,7 +18,7 @@ int blueCount = floor(rank*BLUE_PERCENTAGE), purpleCount = floor(PURPLE_PERCENTA
 int cleanerCount = size - blueCount - purpleCount;
 std::string processType;
 int hotelCapacity = 3;
-int guides = 5;
+int guides = 2;
 
 /* 
  * Każdy proces ma dwa wątki - główny i komunikacyjny

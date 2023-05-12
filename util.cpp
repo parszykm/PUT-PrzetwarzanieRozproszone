@@ -97,7 +97,7 @@ int generateColorCode(std::string processType){
         return 34;
     else if(processType == PURPLE)
         return 35;
-    return 37;
+    return 36;
 
 }
 

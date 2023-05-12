@@ -37,19 +37,41 @@ void mainLoop()
 					leastLoaded = size + 1;
 					packet_t *tmpPacket = new packet_t{clockVar, rank, perc, processType2Int(processType), 0, -1};
 					auto it = hotels.begin();
+					
 					if(processType == CLEANER){
+						int counter = 0;
+						bool condition = true;
+						while(condition){
+						randomHotelIndex = ( std::rand() % ( hotelNumber ) ) ;
 						
-						randomHotelIndex = ( std::rand() % ( hotelNumber + 1 ) ) - 1;
-						println("Wybrałem indeks hotelu %d do sprzątnięcia", randomHotelIndex);
+						it = hotels.begin();
 						while(it != hotels.end() && (int)(it - hotels.begin()) != randomHotelIndex){
 							++it;
 						}
+						
 						tmpPacket->hotelIndex = it - hotels.begin();
-						it->push(*tmpPacket);
+						
 						pkt->hotelIndex = it - hotels.begin();
 						hotelChosen = (int)(it - hotels.begin());
 						hotel = &(*it);
-						println("Wybrałem hotel %d", hotelChosen);	
+						if(it->isAvailable(*tmpPacket)){
+							condition = false;
+							it->push(*tmpPacket);
+							println("Wybrałem indeks hotelu %d do sprzątnięcia", randomHotelIndex);
+						}
+						else{
+							tmpPacket->hotelIndex = -1;
+						}
+							if(counter == 5){
+							println("Nie znalazłem hotelu do wyczyszczenia");
+							break;
+						}
+						counter++;
+						}
+
+						
+						
+						// println("Wybrałem hotel %d", hotelChosen);	
 					}
 					else{
 						// Przeszukiwanie hotelu, który jest dostępny dla danej fakcji i ma najmniejsze wypełnienie
@@ -58,18 +80,26 @@ void mainLoop()
 							if(it->isAvailable(*tmpPacket) && it->getQueueSize() < leastLoaded){
 									leastLoaded = it->getQueueSize();
 									tmpPacket->hotelIndex = it - hotels.begin();
-									it->push(*tmpPacket);
 									pkt->hotelIndex = it - hotels.begin();
+									it->push(*tmpPacket);
 									hotelChosen = (int)(it - hotels.begin());
 									hotel = &(*it);
 							}
 							++it;
 						}
+						// hotel->push(*tmpPacket);
 					}				
 					if(tmpPacket->hotelIndex == -1){
+						randomHotelIndex = ( std::rand() % ( hotelNumber ) ) ;
+						it = hotels.begin();
+						while(it != hotels.end() && (int)(it - hotels.begin()) != randomHotelIndex){
+							++it;
+						}
+						
 						break; //Jeżeli nie znalazło dostępnego hotelu przerwij
 					}
 					println("Wybrałem hotel %d, stan -> %s", hotelChosen, hotel->hotelState.c_str());
+					// hotel->showQueue();
 					ackCount = 0;
 					for (int i=0;i<=size-1;i++)
 					if (i!=rank)
@@ -84,13 +114,14 @@ void mainLoop()
 	    case InWant:
 		{
 			println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
-			pthread_mutex_lock(&wantMut);
-			while (ackCount != size - 1 && !hotel->isCandidate(rank, hotelCapacity, processType)){
-				println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
-				pthread_cond_wait(&cond, &wantMut);	
-			}
-			pthread_mutex_unlock(&wantMut);
-			changeState(InSection);
+			//pthread_mutex_lock(&wantMut);
+			// println("Sprawdzam %d, %d", ackCount != size - 1 , !hotel->isCandidate(rank, hotelCapacity, processType));
+			// while (ackCount != size - 1 || !hotel->isCandidate(rank, hotelCapacity, processType)){
+			//	println("Czekam na wejście do sekcji krytycznej do hotelu %d, ack %d, %d", hotelChosen, ackCount, hotel->isCandidate(rank, hotelCapacity, processType));			
+				//pthread_cond_wait(&cond, &wantMut);	
+			//}	
+			//pthread_mutex_unlock(&wantMut);
+			if(ackCount == size - 1 && hotel->isCandidate(rank, hotelCapacity, processType)) changeState(InSection);
 			break;
 		}
 	    case InSection:
